@@ -15,8 +15,9 @@
         tools:replace="android:theme">
         <activity
             android:name=".OptionPage2"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
