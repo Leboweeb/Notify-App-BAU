@@ -30,16 +30,11 @@ import java.util.concurrent.ExecutionException
 import java.util.concurrent.TimeUnit
 
 
-interface JsonObserver {
-    fun onJsonReady(json: String)
-}
-
 class JsonInterface(
     context: Context,
-    endpoint: String
-) {
     private var endpoint: String
-    private val context: Context
+) {
+
     private var liveData: MutableLiveData<String>
     var preferences: EncryptedSharedPreferences
         private set
@@ -50,8 +45,6 @@ class JsonInterface(
     private var ip: String
 
     init {
-        this.endpoint = endpoint
-        this.context = context
         this.preferences = getPrefs(context)!!
         this.username = preferences.getString("username", "")!!
         this.password = preferences.getString("password", "")!!
@@ -73,11 +66,6 @@ class JsonInterface(
         .readTimeout(timeoutSeconds, TimeUnit.SECONDS)
         .callTimeout(timeoutSeconds, TimeUnit.SECONDS)
         .build()
-
-    enum class HTTPMethod {
-        GET, POST;
-
-    }
 
 
     @JvmOverloads
@@ -223,10 +211,10 @@ fun serializeToPreferencesIfNotFound(
 }
 
 private fun Request.Builder.request(
-    method: JsonInterface.HTTPMethod = JsonInterface.HTTPMethod.GET,
+    method: HTTPMethod = HTTPMethod.GET,
     body: String? = null
 ): Request.Builder {
-    return if (method == JsonInterface.HTTPMethod.GET) {
+    return if (method == HTTPMethod.GET) {
         this
     } else {
         val jsonBody = body!!.toRequestBody("application/json".toMediaType())
