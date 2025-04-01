@@ -10,19 +10,12 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-
-import com.islandparadise14.mintable.MinTimeTableView;
-import com.islandparadise14.mintable.model.ScheduleEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class ScheduleFragment extends Fragment {
 
     private Context context;
-    private ScheduleModel model;
+//    private ScheduleModel model;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -41,10 +34,10 @@ public class ScheduleFragment extends Fragment {
         Button refreshButton = view.findViewById(R.id.refreshButton);
         Button refreshColors = view.findViewById(R.id.refreshColors);
         refreshButton.setOnClickListener(v -> {
-            this.model.setSchedule(true, false);
+//            this.model.setSchedule(true, false);
         });
         refreshColors.setOnClickListener(v -> {
-            this.model.setSchedule(false, true);
+//            this.model.setSchedule(false, true);
         });
     }
 
@@ -52,16 +45,14 @@ public class ScheduleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        ScheduleModel scheduleModel = new ScheduleModel(this.context);
-        this.model = scheduleModel;
+//        ScheduleModel scheduleModel = new ScheduleModel(this.context);
+//        this.model = scheduleModel;
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
-        MinTimeTableView table = view.findViewById(R.id.weekView);
-        table.initTable(List.of("Mon", "Tue", "Wen", "Thu", "Fri").toArray(new String[5]));
-        scheduleModel.setSchedule();
-        LiveData<ArrayList<ScheduleEntity>> data = scheduleModel.getEvents();
-        data.observe(getViewLifecycleOwner(), table::updateSchedules);
+//        MinTimeTableView table = view.findViewById(R.id.weekView);
+//        table.initTable(List.of("Mon", "Tue", "Wen", "Thu", "Fri").toArray(new String[5]));
+//        scheduleModel.setSchedule();
+//        LiveData<ArrayList<ScheduleEntity>> data = scheduleModel.getEvents();
+//        data.observe(getViewLifecycleOwner(), table::updateSchedules);
         return view;
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.example.bettermoodle
 
 
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -147,13 +148,12 @@ class Notification {
     @SerializedName("customdata")
     @Expose
     var customdata: String? = null
+
+    override fun toString(): String {
+        return "$subject\n\n$fullmessage"
+    }
 }
 
-
-enum class HTTPMethod {
-    GET, POST;
-
-}
 
 class LocalApi(private val username: String, private val password: String) {
 
@@ -394,4 +394,10 @@ class LocalApi(private val username: String, private val password: String) {
 }
 
 
-
+fun getLocalApi(context: Context): LocalApi {
+    val prefs = getPrefs(context)
+        ?: throw Exception("Encrypted preferences instance not found! This shouldn't happen!")
+    val username = prefs.getString("username", "") ?: ""
+    val password = prefs.getString("password", "") ?: ""
+    return LocalApi(username, password)
+}

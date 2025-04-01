@@ -38,47 +38,23 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         userid = findViewById(R.id.userid);
         password = findViewById(R.id.password);
-        ipaddress = findViewById(R.id.userip);
         loginbutton = findViewById(R.id.loginbutton);
         EncryptedSharedPreferences prefs = getPrefs(getApplicationContext());
         assert prefs != null;
-        String[] keys = {"username", "password", "ip"};
-        EditText[] texts = {userid, password, ipaddress};
-//        boolean hasCredentials = true, allTextsNotEmpty = true;
-//        for (String key : keys) {
-//            boolean contains = prefs.contains(key);
-//            if (!contains) {
-//                hasCredentials = false;
-//            }
-//        }
-//        if (hasCredentials) {
-//            // we already have credentials, replace text with the values
-//            for (int i = 0; i < 3; i++) {
-//                String value = prefs.getString(keys[i], "");
-//                texts[i].setText(value);
-//            }
-//        }
-//        // then check if the texts are filled or not
-//        for (EditText text : texts) {
-//            String textValue = text.getText().toString();
-//            if (textValue.isBlank() || textValue.isEmpty()) {
-//                allTextsNotEmpty = false;
-//            }
-//        }
-
-
-//        boolean finalHasCredentials = hasCredentials;
-//        boolean finalAllTextsNotEmpty = allTextsNotEmpty;
+        String[] keys = {"username", "password"};
+        EditText[] texts = {userid, password};
+        // replace user and password fields, or empty string.
+        for (int i = 0; i < keys.length; i++) {
+            String value = prefs.getString(keys[i], "");
+            texts[i].setText(value);
+        }
         loginbutton.setOnClickListener(view -> {
+            // store information for future logins
+            for (int i = 0; i < keys.length; i++) {
+                prefs.edit().putString(keys[i], texts[i].getText().toString()).apply();
+            }
             Intent intent = new Intent(MainActivity.this, OptionPage2.class);
             startActivity(intent);
-            // store information for future logins
-//            if (!finalHasCredentials || finalAllTextsNotEmpty) {
-//                for (int i = 0; i < 3; i++) {
-//                    prefs.edit().putString(keys[i], texts[i].getText().toString()).apply();
-//                }
-//            }
-//            Intent intent = new Intent(MainActivity.this, OptionPage2.class);
 //            JsonInterface jsonInterface = new JsonInterface(this, "");
 //            // set the bar to visible before request
 //            progressBar.setVisibility(View.VISIBLE);
