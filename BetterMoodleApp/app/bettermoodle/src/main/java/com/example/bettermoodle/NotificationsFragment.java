@@ -23,14 +23,16 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class NotificationsFragment extends Fragment implements MenuProvider {
 
     ListView listView;
     SearchView searchView;
-    ArrayAdapter arrayAdapter;
     LocalApi localApi;
+    List<Notification> notificationList;
+    private ArrayAdapter<String> arrayAdapter;
 //    test value:
 //    String[] notificationslist = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
@@ -66,8 +68,10 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
             }.getType();
             return gson.fromJson(notificationsJson, listType);
         }, "moodle/notifications").observe(getViewLifecycleOwner(), notificationList -> {
+            this.notificationList = notificationList;
             String[] notificationsStrings = notificationList.stream().map(Notification::toString).toArray(String[]::new);
-            arrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.list_custometext, notificationsStrings);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.list_custometext, notificationsStrings);
+            this.arrayAdapter = arrayAdapter;
             listView.setAdapter(arrayAdapter);
         });
         listView.setOnItemClickListener((parent, view1, position, id) -> {
@@ -89,13 +93,13 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 arrayAdapter.getFilter().filter(newText);
-                return false;
+                return true;
             }
         });
 
@@ -106,5 +110,6 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
     public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
         return false;
     }
+
 
 }

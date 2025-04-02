@@ -1,9 +1,12 @@
 package com.example.bettermoodle;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -17,6 +20,8 @@ public class OptionPage2 extends AppCompatActivity {
     SettingsFragment settingsFragment = new SettingsFragment();
     ScheduleFragment scheduleFragment = new ScheduleFragment();
     NotificationsFragment notificationFragment = new NotificationsFragment();
+    private int mSelectedItem;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,25 +32,52 @@ public class OptionPage2 extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.home) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+                    navigateToFragment(homeFragment);
                     return true;
                 } else if (itemId == R.id.notification) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, notificationFragment).commit();
+                    navigateToFragment(notificationFragment);
                     return true;
                 } else if (itemId == R.id.schedule) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, scheduleFragment).commit();
+                    navigateToFragment(scheduleFragment);
                     return true;
                 } else if (itemId == R.id.settings) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, settingsFragment).commit();
+                    navigateToFragment(settingsFragment);
                     return true;
                 }
-
+                mSelectedItem = itemId;
                 return false;
             }
         });
 
+    }
+
+    private void navigateToFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment, fragment.getClass().getSimpleName())
+                .addToBackStack(fragment.getClass().getSimpleName())
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        MenuItem homeItem = bottomNavigationView.getMenu().getItem(0);
+        if (mSelectedItem != homeItem.getItemId()) {
+            navigateToFragment(homeFragment);
+            // Select home item
+            bottomNavigationView.setSelectedItemId(homeItem.getItemId());
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    private void updateNavigationBarState(int actionId) {
+        Menu menu = bottomNavigationView.getMenu();
+
+        for (int i = 0, size = menu.size(); i < size; i++) {
+            MenuItem item = menu.getItem(i);
+            item.setChecked(item.getItemId() == actionId);
+        }
     }
 }
