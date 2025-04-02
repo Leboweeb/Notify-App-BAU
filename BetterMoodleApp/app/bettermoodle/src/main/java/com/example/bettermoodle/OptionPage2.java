@@ -1,14 +1,12 @@
 package com.example.bettermoodle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-
-
 
 
 public class OptionPage2 extends AppCompatActivity {
@@ -24,13 +22,9 @@ public class OptionPage2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.optionpage2);
-
-        bottomNavigationView  = findViewById(R.id.bottom_navigation);
-
-//        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
-
-
-
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // the home fragment is the default fragment.
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {

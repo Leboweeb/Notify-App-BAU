@@ -2,9 +2,13 @@ package com.example.bettermoodle
 
 
 import android.content.Context
+import android.graphics.BitmapFactory
+import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import okhttp3.Cache
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -15,6 +19,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import org.example.JavaNetCookieJar
 import org.json.JSONArray
 import org.json.JSONObject
@@ -23,7 +28,9 @@ import java.io.IOException
 import java.net.CookieManager
 import java.net.CookiePolicy
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ExecutionException
 import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 
 
 enum class BauService(val url: String, val finalUrl: HttpUrl) {
@@ -155,11 +162,18 @@ class Notification {
 }
 
 
-class LocalApi(private val username: String, private val password: String) {
+class LocalApi(
+    private val context: Context,
+) {
 
     private val userAgent = RandomUserAgent.getRandomUserAgent()
     private val authURL = "https://eis.bau.edu.lb/commonauth"
     private val client = httpClientBuilder()
+    private val preferences =
+        getPrefs(context) ?: throw Exception("Couldn't retrieve encrypted shared prefs!")
+    private val username = preferences.getString("username", "") ?: ""
+    private val password = preferences.getString("password", "") ?: ""
+
 
     private fun login(service: BauService): Response? {
         val response = performRequest(service.url).get()
@@ -215,6 +229,7 @@ class LocalApi(private val username: String, private val password: String) {
 
     }
 
+    //    @Throws(FailedToScrapeException::class)
     fun getXFilesInfo(): XFilesInfo {
         connectToIconnect()
         val xfilesRequest = Request.Builder()
@@ -249,8 +264,18 @@ class LocalApi(private val username: String, private val password: String) {
         }.toMutableMap()
         textValues["cgpa"] = textValues["cgpa"]!!.split("/")[0]
         textValues["sgpa"] = textValues["sgpa"]!!.split("/")[0]
+        if (textValues.any {
+                it.value.isEmpty()
+            })
+            throw Exception("Couldn't extract x files info!")
+        val imageUrl =
+            extractBackgroundImageUrl(
+                document.select("div[style*=\"ProfileImage\"]").attr("style")
+            ).replace("'", "") // remove trailing '' from parse result
+        val imageBytestream = performRequest(imageUrl).get().body!!.byteStream()
+        val bitmap = BitmapFactory.decodeStream(imageBytestream)
         textValues["studentImage"] =
-            extractBackgroundImageUrl(document.select("div[style*=\"ProfileImage\"]").attr("style"))
+            bitmapToB64(bitmap)
         return XFilesInfo(
             studentName = textValues["studentName"].orEmpty(),
             studentID = textValues["studentId"].orEmpty(),
@@ -352,19 +377,16 @@ class LocalApi(private val username: String, private val password: String) {
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
         val cookieJar = JavaNetCookieJar(cookieManager)
         val timeoutSeconds = 120L
+        val logger = HttpLoggingInterceptor()
+        logger.setLevel(HttpLoggingInterceptor.Level.BASIC)
         val client = OkHttpClient.Builder()
-//        .cache(
-//            Cache(
-//                directory = context.cacheDir,
-//                maxSize = 10L * 1024L * 1024L
-//            )
-//        )
-//            .addInterceptor { chain ->
-//                chain.request().newBuilder().removeHeader("User-Agent")
-//                    .addHeader("User-Agent", this.userAgent)
-//                    .addHeader("Accept-Language", "en-US,en;q=0.7")
-//                    .build()
-//                    .let(chain::proceed)}
+            .cache(
+                Cache(
+                    directory = context.cacheDir,
+                    maxSize = 10L * 1024L * 1024L
+                )
+            )
+
             .cookieJar(cookieJar).followRedirects(true)
             .connectTimeout(timeoutSeconds, TimeUnit.SECONDS)
             .writeTimeout(timeoutSeconds, TimeUnit.SECONDS)
@@ -391,13 +413,65 @@ class LocalApi(private val username: String, private val password: String) {
         return this!!.body!!.string()
     }
 
-}
+    @JvmOverloads
+    fun <T> postResponseToListener(
+        forceNetwork: Boolean = false,
+        // it is assumed T here is a type serializable to JSON
+        callback: () -> T,
+        deserializer: (String) -> T,
+        // NOTE: cache key sample strings will be "moodle/notifications" or "iconnect/xfiles" similar to an HTTP endpoint for clarity.
+        cacheKey: String,
+    ): MutableLiveData<T> {
+        val liveData = MutableLiveData<T>()
+        if (getCachedJson(cacheKey) == "" || forceNetwork) {
+            try {
+                thread(start = true) {
+                    val output = callback()
+                    val serializedOutput = Gson().toJson(output)
+                    liveData.postValue(output)
+                    serializeToPreferencesIfNotFound(
+                        preferences, cacheKey, serializedOutput, true
+                    )
+                }.join()
+            } catch (e: ExecutionException) {
+                logStackTrace("HTTP Tag", e)
+            } catch (e: InterruptedException) {
+                logStackTrace("HTTP Tag", e)
+            }
+
+        } else {
+            // if we already have a response, just return from cache
+            // THIS CLASS IS NOT RESPONSIBLE FOR REFRESHING DATA
+            // MAKE SURE ANOTHER CLASS DOES
+            val cachedJson = getCachedJson(cacheKey)
+            liveData.postValue(deserializer(cachedJson))
+        }
+        return liveData
+    }
 
 
-fun getLocalApi(context: Context): LocalApi {
-    val prefs = getPrefs(context)
-        ?: throw Exception("Encrypted preferences instance not found! This shouldn't happen!")
-    val username = prefs.getString("username", "") ?: ""
-    val password = prefs.getString("password", "") ?: ""
-    return LocalApi(username, password)
+    private fun getCachedJson(cacheKey: String): String {
+        return preferences.getString(cacheKey, "")!!
+    }
+
+
+//    private fun getCachedJsonTimestamp(): Duration? {
+//        val expires: Long = JSONObject(getCachedJson()).getLong("expires")
+//        val expiresDateTime =
+//            LocalDateTime.ofInstant(Instant.ofEpochMilli(expires), ZoneId.systemDefault())
+//        val now = LocalDateTime.now()
+//        return Duration.between(now, expiresDateTime)
+//    }
+
+//    fun moodleInvalidator(): Boolean {
+//        return getCachedJsonTimestamp()!!.toHours() >= 8
+//    }
+
+
 }
+
+//class FailedToScrapeException(s: String) : Exception() {
+//
+//}
+
+

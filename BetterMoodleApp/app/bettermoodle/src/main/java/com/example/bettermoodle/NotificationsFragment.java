@@ -1,7 +1,5 @@
 package com.example.bettermoodle;
 
-import static com.example.bettermoodle.LocalApiKt.getLocalApi;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +30,6 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
     ListView listView;
     SearchView searchView;
     ArrayAdapter arrayAdapter;
-    JsonInterface jsonInterface;
     LocalApi localApi;
 //    String[] notificationslist = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
@@ -44,8 +41,7 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.jsonInterface = new JsonInterface(context);
-        this.localApi = getLocalApi(context);
+        this.localApi = new LocalApi(context);
     }
 
     @Override
@@ -62,7 +58,7 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
         super.onViewCreated(view, savedInstanceState);
         listView = requireView().findViewById(R.id.listView);
         searchView = requireView().findViewById(R.id.SearchView);
-        jsonInterface.postResponseToListener(localApi::getMoodleNotifications, (notificationsJson) -> {
+        localApi.postResponseToListener(localApi::getMoodleNotifications, (notificationsJson) -> {
             Gson gson = new Gson();
             Type listType = new TypeToken<ArrayList<Notification>>() {
             }.getType();

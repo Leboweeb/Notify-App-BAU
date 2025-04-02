@@ -105,3 +105,5 @@ fun b64ToBitmap(encodedString: String): Bitmap {
     return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)!!
 
 }
+
+

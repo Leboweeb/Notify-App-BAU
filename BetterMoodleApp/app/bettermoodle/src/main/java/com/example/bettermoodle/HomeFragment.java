@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
+
 public class HomeFragment extends Fragment {
 
     CardView StudentInfoCard;
@@ -42,19 +44,35 @@ public class HomeFragment extends Fragment {
         TextView sgpa = view.findViewById(R.id.SGPA_value);
         TextView creditsValue = view.findViewById(R.id.Credits_value);
         ImageView userAvatar = view.findViewById(R.id.def_user_photo);
+        LocalApi localApi = new LocalApi(requireContext());
+        localApi.postResponseToListener(
+                localApi::getXFilesInfo, (xfilesinfoString) -> {
+                    Gson gson = new Gson();
+                    return gson.fromJson(xfilesinfoString, XFilesInfo.class);
+                }, "iconnect/xfiles"
+        ).observe(getViewLifecycleOwner(), xFilesInfo -> {
+            userName.setText(xFilesInfo.getStudentName());
+            userId.setText(xFilesInfo.getStudentID());
+            userAvatar.setImageBitmap(UtilsKt.b64ToBitmap(xFilesInfo.getStudentImage()));
+            programValue.setText(xFilesInfo.getProgram());
+            cgpa.setText(xFilesInfo.getCgpa());
+            sgpa.setText(xFilesInfo.getSgpa());
+            creditsValue.setText(xFilesInfo.getCreditsCompleted());
+        });
+        ;
 
-        new Thread(() -> {
-            LocalApi api = LocalApiKt.getLocalApi(view.getContext());
-            XFilesInfo xFilesInfo = api.getXFilesInfo();
-            requireActivity().runOnUiThread(() -> {
-                userName.setText(xFilesInfo.getStudentName());
-                userId.setText(xFilesInfo.getStudentID());
-                programValue.setText(xFilesInfo.getProgram());
-                cgpa.setText(xFilesInfo.getCgpa());
-                sgpa.setText(xFilesInfo.getSgpa());
-                creditsValue.setText(xFilesInfo.getCreditsCompleted());
-            });
-        }).start();
+//        new Thread(() -> {
+//            LocalApi api = LocalApiKt.getLocalApi(view.getContext());
+//            XFilesInfo xFilesInfo = api.getXFilesInfo();
+//            requireActivity().runOnUiThread(() -> {
+//                userName.setText(xFilesInfo.getStudentName());
+//                userId.setText(xFilesInfo.getStudentID());
+//                programValue.setText(xFilesInfo.getProgram());
+//                cgpa.setText(xFilesInfo.getCgpa());
+//                sgpa.setText(xFilesInfo.getSgpa());
+//                creditsValue.setText(xFilesInfo.getCreditsCompleted());
+//            });
+//        }).start();
 
 //        userAvatar.setText(xFilesInfo.getStudentID());
 //            try {
