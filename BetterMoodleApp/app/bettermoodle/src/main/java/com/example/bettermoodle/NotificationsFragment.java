@@ -31,9 +31,10 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
 
     ListView listView;
     SearchView searchView;
-    ArrayAdapter arrayAdapter;
+    ArrayAdapter<String> arrayAdapter;
     JsonInterface jsonInterface;
     LocalApi localApi;
+//    test value:
 //    String[] notificationslist = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     @Override
@@ -53,10 +54,11 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-//         this.jsonInterface = new JsonInterface();
+        // this.jsonInterface = new JsonInterface();
         return inflater.inflate(R.layout.fragment_notifications, container, false);
     }
 
+    //List of Notification Code:
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -80,7 +82,7 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
         });
     }
 
-
+    //Search Bar Code:
     @Override
     public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
         menuInflater.inflate(R.menu.notifcations_menu, menu);

@@ -8,4 +8,5 @@
     <string name="appwidget_text">BetterMoodle Schedule</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">BetterMoodle Schedule Widget</string>
+    <string name="search">Search</string>
 </resources>
