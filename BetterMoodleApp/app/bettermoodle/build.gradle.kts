@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.github.thellmund.Android-Week-View:core:5.3.2")
     implementation("com.github.thellmund.Android-Week-View:jsr310:5.3.2")
     implementation("androidx.security:security-crypto:1.0.0")

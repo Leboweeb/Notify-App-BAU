@@ -1,292 +1,296 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/Dashboard"
-    android:background="@color/white"
-    android:layout_marginTop="30dp">
+    android:id="@+id/swipe"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/header"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="125dp"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/segoeui"
-        android:text="Student Info"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/student_info_card"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </TextView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/student_info_card"
-        android:layout_width="369dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="60dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/def_user_photo"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/baseline_person_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/student_name"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/Dashboard"
+        android:background="@color/white"
+        android:layout_marginTop="30dp">
 
         <TextView
-            android:id="@+id/student_name"
+            android:id="@+id/header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="180dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="125dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="@font/segoeui"
-            android:text="Mohammad Omar Youssef Shahbaz"
-            android:textSize="20sp">
+            android:text="Student Info"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/student_info_card"
+            app:layout_constraintStart_toStartOf="parent">
 
         </TextView>
 
-        <TextView
-            android:id="@+id/student_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="180dp"
-            android:layout_marginTop="100dp"
-            android:fontFamily="@font/segoeui"
-            android:text="202200578"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@id/def_user_photo"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/student_info_card"
+            android:layout_width="369dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="60dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/def_user_photo"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/baseline_person_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/student_name"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/student_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/segoeui"
+                android:text="Mohammad Omar Youssef Shahbaz"
+                android:textSize="20sp">
 
-    <LinearLayout
-        android:id="@+id/row1"
-        android:layout_width="0dp"
-        android:layout_height="210dp"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/student_info_card">
+            </TextView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/program_card"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/program_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoeui"
-                    android:text="Program"
-                    android:textSize="20sp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/program_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoeui"
-                    android:gravity="center_horizontal"
-                    android:paddingHorizontal="12dp"
-                    android:text="Computer Engineering"
-                    android:textSize="20sp">
-                </TextView>
-
-
-            </LinearLayout>
-
+            <TextView
+                android:id="@+id/student_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="180dp"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/segoeui"
+                android:text="202200578"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@id/def_user_photo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.cardview.widget.CardView>
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cgpa_card"
+        <LinearLayout
+            android:id="@+id/row1"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="20dp">
+            android:layout_height="210dp"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/student_info_card">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/program_card"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="10dp">
 
-                <TextView
-                    android:id="@+id/CGPA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoeui"
-                    android:gravity="center"
-                    android:text="CGPA"
-                    android:textSize="20sp"
-                    android:textStyle="bold">
-                </TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/CGPA_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoeui"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="4.0"
-                    android:textSize="20sp">
-                </TextView>
+                    <TextView
+                        android:id="@+id/program_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/segoeui"
+                        android:text="Program"
+                        android:textSize="20sp"
+                        android:textStyle="bold">
 
-            </LinearLayout>
+                    </TextView>
 
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/program_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/segoeui"
+                        android:gravity="center_horizontal"
+                        android:paddingHorizontal="12dp"
+                        android:text="Computer Engineering"
+                        android:textSize="20sp">
+                    </TextView>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/row2"
-        android:layout_width="0dp"
-        android:layout_height="210dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/row1">
+                </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/sgpa_card"
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cgpa_card"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/CGPA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/segoeui"
+                        android:gravity="center"
+                        android:text="CGPA"
+                        android:textSize="20sp"
+                        android:textStyle="bold">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/CGPA_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/segoeui"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="4.0"
+                        android:textSize="20sp">
+                    </TextView>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/row2"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="10dp">
+            android:layout_height="210dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/row1">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/sgpa_card"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="10dp">
 
-                <TextView
-                    android:id="@+id/SGPA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoeui"
-                    android:text="SGPA"
-                    android:textSize="20sp"
-                    android:textStyle="bold">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                </TextView>
+                    <TextView
+                        android:id="@+id/SGPA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/segoeui"
+                        android:text="SGPA"
+                        android:textSize="20sp"
+                        android:textStyle="bold">
 
-                <TextView
-                    android:id="@+id/SGPA_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoeui"
-                    android:padding="10dp"
-                    android:text="4.0"
-                    android:textSize="20sp">
-                </TextView>
+                    </TextView>
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/SGPA_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/segoeui"
+                        android:padding="10dp"
+                        android:text="4.0"
+                        android:textSize="20sp">
+                    </TextView>
 
-        </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/credits_card"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="20dp">
+            </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/credits_card"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="20dp">
 
-                <TextView
-                    android:id="@+id/Credits"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:fontFamily="@font/segoeui"
-                    android:text="Credits Completed"
-                    android:layout_marginLeft="5dp"
-                    android:paddingHorizontal="4dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                </TextView>
+                    <TextView
+                        android:id="@+id/Credits"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:fontFamily="@font/segoeui"
+                        android:text="Credits Completed"
+                        android:layout_marginLeft="5dp"
+                        android:paddingHorizontal="4dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold">
 
-                <TextView
-                    android:id="@+id/Credits_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/segoeui"
-                    android:padding="10dp"
-                    android:text="150"
-                    android:textSize="20sp">
+                    </TextView>
 
-                </TextView>
+                    <TextView
+                        android:id="@+id/Credits_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/segoeui"
+                        android:padding="10dp"
+                        android:text="150"
+                        android:textSize="20sp">
 
-            </LinearLayout>
+                    </TextView>
 
-        </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
-    </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
+        </LinearLayout>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>

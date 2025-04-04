@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,8 +34,30 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
     LocalApi localApi;
     List<Notification> notificationList;
     private ArrayAdapter<String> arrayAdapter;
-//    test value:
-//    String[] notificationslist = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    private void updateNotifications(View view){
+        listView = requireView().findViewById(R.id.listView);
+        searchView = requireView().findViewById(R.id.SearchView);
+        localApi.postResponseToListener(localApi::getMoodleNotifications, (notificationsJson) -> {
+            Gson gson = new Gson();
+            Type listType = new TypeToken<ArrayList<Notification>>() {
+            }.getType();
+            return gson.fromJson(notificationsJson, listType);
+        }, "moodle/notifications").observe(getViewLifecycleOwner(), notificationList -> {
+            this.notificationList = notificationList;
+            String[] notificationsStrings = notificationList.stream().map(Notification::toString).toArray(String[]::new);
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.list_custometext, notificationsStrings);
+            this.arrayAdapter = arrayAdapter;
+            listView.setAdapter(arrayAdapter);
+        });
+        listView.setOnItemClickListener((parent, view1, position, id) -> {
+            Intent intent = new Intent(getActivity(), IndividualAnnouncement.class);
+            String notificationMessage = (String) listView.getItemAtPosition(position);
+            intent.putExtra("message", notificationMessage);
+            startActivity(intent);
+        });
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,25 +83,14 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listView = requireView().findViewById(R.id.listView);
-        searchView = requireView().findViewById(R.id.SearchView);
-        localApi.postResponseToListener(localApi::getMoodleNotifications, (notificationsJson) -> {
-            Gson gson = new Gson();
-            Type listType = new TypeToken<ArrayList<Notification>>() {
-            }.getType();
-            return gson.fromJson(notificationsJson, listType);
-        }, "moodle/notifications").observe(getViewLifecycleOwner(), notificationList -> {
-            this.notificationList = notificationList;
-            String[] notificationsStrings = notificationList.stream().map(Notification::toString).toArray(String[]::new);
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(requireActivity(), R.layout.list_custometext, notificationsStrings);
-            this.arrayAdapter = arrayAdapter;
-            listView.setAdapter(arrayAdapter);
-        });
-        listView.setOnItemClickListener((parent, view1, position, id) -> {
-            Intent intent = new Intent(getActivity(), IndividualAnnouncement.class);
-            String notificationMessage = (String) listView.getItemAtPosition(position);
-            intent.putExtra("message", notificationMessage);
-            startActivity(intent);
+        swipeRefreshLayout = view.findViewById(R.id.swipe);
+        updateNotifications(view);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateNotifications(view);
+                swipeRefreshLayout.setRefreshing(false);
+            }
         });
     }
 
