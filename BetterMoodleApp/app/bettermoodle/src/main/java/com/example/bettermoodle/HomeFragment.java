@@ -2,41 +2,29 @@ package com.example.bettermoodle;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 
+
+
 public class HomeFragment extends Fragment {
-
-    CardView StudentInfoCard;
-    CardView RecentCard;
-    CardView AssignmentsCard;
-    CardView CoursesCard;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    SwipeRefreshLayout swipeRefreshLayout;
+    // Method to update user information
+    private void updateUserInfo(View view) {
         TextView userName = view.findViewById(R.id.student_name);
         TextView userId = view.findViewById(R.id.student_id);
         TextView programValue = view.findViewById(R.id.program_value);
@@ -61,5 +49,30 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    //grab info from Iconnect and put it in the respective fields:
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        swipeRefreshLayout = view.findViewById(R.id.swipe);
+        updateUserInfo(view);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateUserInfo(view);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
 }
