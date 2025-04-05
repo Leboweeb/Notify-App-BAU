@@ -59,35 +59,7 @@ public class HomeFragment extends Fragment {
             sgpa.setText(xFilesInfo.getSgpa());
             creditsValue.setText(xFilesInfo.getCreditsCompleted());
         });
-        ;
-
-//        new Thread(() -> {
-//            LocalApi api = LocalApiKt.getLocalApi(view.getContext());
-//            XFilesInfo xFilesInfo = api.getXFilesInfo();
-//            requireActivity().runOnUiThread(() -> {
-//                userName.setText(xFilesInfo.getStudentName());
-//                userId.setText(xFilesInfo.getStudentID());
-//                programValue.setText(xFilesInfo.getProgram());
-//                cgpa.setText(xFilesInfo.getCgpa());
-//                sgpa.setText(xFilesInfo.getSgpa());
-//                creditsValue.setText(xFilesInfo.getCreditsCompleted());
-//            });
-//        }).start();
-
-//        userAvatar.setText(xFilesInfo.getStudentID());
-//            try {
-//                JSONObject response = new JSONObject(s);
-//                String name = response.getString("name");
-//                String image = response.getString("image");
-////                byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
-////                Bitmap decodedBytes = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//                userName.setText(name);
-//                userAvatar.setImageBitmap(b64ToBitmap(image));
-//            } catch (JSONException e) {
-//
-//                throw new RuntimeException(e);
-//            }
-//        });
-
     }
+
+
 }

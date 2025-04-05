@@ -47,8 +47,6 @@ android {
 }
 
 dependencies {
-    implementation("com.github.thellmund.Android-Week-View:core:5.3.2")
-    implementation("com.github.thellmund.Android-Week-View:jsr310:5.3.2")
     implementation("androidx.security:security-crypto:1.0.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")
@@ -67,8 +65,9 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.github.islandparadise14:Mintable:1.5.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-    implementation("com.google.code.gson:gson:2.10.1")
+//    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("com.google.code.gson:gson:2.12.1")
     implementation("org.jsoup:jsoup:1.14.3")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation("com.github.tlaabs:TimetableView:1.0.3-fx1")
 }

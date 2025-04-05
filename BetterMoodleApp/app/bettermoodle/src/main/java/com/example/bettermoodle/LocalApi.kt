@@ -6,14 +6,11 @@ import android.graphics.BitmapFactory
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
 import okhttp3.Cache
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
-import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -31,135 +28,6 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
-
-
-enum class BauService(val url: String, val finalUrl: HttpUrl) {
-    ICONNECT(
-        "https://iconnect.bau.edu.lb",
-        "https://mis.bau.edu.lb/web/v12/iconnectv12/base/portalhome.aspx".toHttpUrl()
-    ),
-    MOODLE(
-        "https://moodle.bau.edu.lb", "https://moodle.bau.edu.lb/my/".toHttpUrl()
-    )
-}
-
-
-data class XFilesInfo(
-    val studentName: String,
-    val studentID: String,
-    val studentImage: String,
-    val program: String,
-    val cgpa: String,
-    val sgpa: String,
-    val creditsCompleted: String
-)
-
-class Data {
-    @SerializedName("notifications")
-    @Expose
-    var notifications: List<Notification>? = null
-}
-
-
-class ResponseClass {
-    @SerializedName("error")
-    @Expose
-    var error: Boolean? = null
-
-    @SerializedName("data")
-    @Expose
-    var data: Data? = null
-}
-
-class Notification {
-    @SerializedName("id")
-    @Expose
-    var id: Int? = null
-
-    @SerializedName("useridfrom")
-    @Expose
-    var useridfrom: Int? = null
-
-    @SerializedName("useridto")
-    @Expose
-    var useridto: Int? = null
-
-    @SerializedName("subject")
-    @Expose
-    var subject: String? = null
-
-    @SerializedName("shortenedsubject")
-    @Expose
-    var shortenedsubject: String? = null
-
-    @SerializedName("text")
-    @Expose
-    var text: String? = null
-
-    @SerializedName("fullmessage")
-    @Expose
-    var fullmessage: String? = null
-
-    @SerializedName("fullmessageformat")
-    @Expose
-    var fullmessageformat: Int? = null
-
-    @SerializedName("fullmessagehtml")
-    @Expose
-    var fullmessagehtml: String? = null
-
-    @SerializedName("smallmessage")
-    @Expose
-    var smallmessage: String? = null
-
-    @SerializedName("contexturl")
-    @Expose
-    var contexturl: String? = null
-
-    @SerializedName("contexturlname")
-    @Expose
-    var contexturlname: String? = null
-
-    @SerializedName("timecreated")
-    @Expose
-    var timecreated: Int? = null
-
-    @SerializedName("timecreatedpretty")
-    @Expose
-    var timecreatedpretty: String? = null
-
-    @SerializedName("timeread")
-    @Expose
-    var timeread: Int? = null
-
-    @SerializedName("read")
-    @Expose
-    var read: Boolean? = null
-
-    @SerializedName("deleted")
-    @Expose
-    var deleted: Boolean? = null
-
-    @SerializedName("iconurl")
-    @Expose
-    var iconurl: String? = null
-
-    @SerializedName("component")
-    @Expose
-    var component: String? = null
-
-    @SerializedName("eventtype")
-    @Expose
-    var eventtype: String? = null
-
-    @SerializedName("customdata")
-    @Expose
-    var customdata: String? = null
-
-    override fun toString(): String {
-        return "$subject\n\n$fullmessage"
-    }
-}
 
 
 class LocalApi(
@@ -192,18 +60,13 @@ class LocalApi(
             formBody.addEncoded(key, value)
         }
         val requestBody = formBody.build()
-        val loginRequest =
-            Request.Builder().url(authURL).removeHeader("User-Agent")
-                .addHeader("User-Agent", this.userAgent)
-                .addHeader(
-                    "Accept",
-                    "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-                )
-                .addHeader("Accept-Language", "en-US,en;q=0.5")
-                .addHeader("Accept-Encoding", "gzip, deflate, br, zstd")
-                .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                .addHeader("Connection", "keep-alive")
-                .post(requestBody)
+        val loginRequest = Request.Builder().url(authURL).removeHeader("User-Agent")
+            .addHeader("User-Agent", this.userAgent).addHeader(
+                "Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+            ).addHeader("Accept-Language", "en-US,en;q=0.5")
+            .addHeader("Accept-Encoding", "gzip, deflate, br, zstd")
+            .addHeader("Content-Type", "application/x-www-form-urlencoded")
+            .addHeader("Connection", "keep-alive").post(requestBody)
         val loginResponse = performRequest(loginRequest.build())
         return loginResponse.get()
     }
@@ -236,23 +99,19 @@ class LocalApi(
             .url("https://mis.bau.edu.lb/web/v12/iconnectv12/cas/intermediate.aspx?TargetURL=https://mis.bau.edu.lb/web/v12/iconnectv12/base/profileV2.aspx")
             .addHeader("Accept-Language", "en-US,en;q=0.7")
             .addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
-            .addHeader("Accept-Encoding", "gzip, deflate, br, zstd")
-            .addHeader("Priority", "u=0, i")
-            .addHeader("Sec-Fetch-Dest", "document")
-            .addHeader("Sec-Fetch-Mode", "navigate")
-            .addHeader("Sec-Fetch-Site", "same-site")
-            .addHeader("Sec-Fetch-User", "?1")
-            .addHeader("Upgrade-Insecure-Requests", "document")
-            .setClientHeader()
-            .build()
-        val xfilesResponse =
-            performRequest(xfilesRequest).get()
+            .addHeader("Accept-Encoding", "gzip, deflate, br, zstd").addHeader("Priority", "u=0, i")
+            .addHeader("Sec-Fetch-Dest", "document").addHeader("Sec-Fetch-Mode", "navigate")
+            .addHeader("Sec-Fetch-Site", "same-site").addHeader("Sec-Fetch-User", "?1")
+            .addHeader("Upgrade-Insecure-Requests", "document").setClientHeader().build()
+        val xfilesResponse = performRequest(xfilesRequest).get()
         val xfilesPage = xfilesResponse.getBody()
         val selectors = hashMapOf(
             "studentName" to "#lblDisplayName",
             // huge ass selector generated by firefox, probably volatile. Too bad!
             "studentId" to ".col-lg-9 > div:nth-child(1) > div:nth-child(2) > table:nth-child(2) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2)",
 //            "studentImage" to "div[style*=\"ProfileImage\"]",
+            // get first term in academic history
+            "term" to "#AcademicHistory > tbody > tr:nth-child(1) > td:nth-child(1)",
             "program" to "#lblCurrentProgram",
             "cgpa" to "#lblLatestCGPA",
             "sgpa" to "#lblCurrentGPA",
@@ -266,20 +125,29 @@ class LocalApi(
         textValues["sgpa"] = textValues["sgpa"]!!.split("/")[0]
         if (textValues.any {
                 it.value.isEmpty()
-            })
-            throw Exception("Couldn't extract x files info!")
-        val imageUrl =
-            extractBackgroundImageUrl(
-                document.select("div[style*=\"ProfileImage\"]").attr("style")
-            ).replace("'", "") // remove trailing '' from parse result
+            }) throw Exception("Couldn't extract x files info!")
+        val imageUrl = extractBackgroundImageUrl(
+            document.select("div[style*=\"ProfileImage\"]").attr("style")
+        ).replace("'", "") // remove trailing '' from parse result
+
+        val termTokens = textValues["term"].orEmpty().split(" ")
+        val termYear = termTokens.last()
+        val termID = when (termTokens[0]) {
+            "Fall" -> 10
+            "Spring" -> 20
+            "Summer" -> 30
+            else -> -1
+        }
+        if (termID == -1) throw Exception("Current term is undefined! Either selector is wrong or page has been updated.")
+
         val imageBytestream = performRequest(imageUrl).get().body!!.byteStream()
         val bitmap = BitmapFactory.decodeStream(imageBytestream)
-        textValues["studentImage"] =
-            bitmapToB64(bitmap)
+        textValues["studentImage"] = bitmapToB64(bitmap)
         return XFilesInfo(
             studentName = textValues["studentName"].orEmpty(),
             studentID = textValues["studentId"].orEmpty(),
             studentImage = textValues["studentImage"].orEmpty(),
+            term = "$termYear$termID",
             program = textValues["program"].orEmpty(),
             cgpa = textValues["cgpa"].orEmpty(),
             sgpa = textValues["sgpa"].orEmpty(),
@@ -308,6 +176,19 @@ class LocalApi(
         return notificationsListPojo
     }
 
+    fun getSchedule(): List<Course> {
+        val schedulePage = login(BauService.SCHEDULE).getBody()
+        val currentTerm = Jsoup.parse(schedulePage).select("option").last()!!.attr("value")
+        performRequest("https://banservices.bau.edu.lb/StudentRegistrationSsb/ssb/registrationHistory/reset?term=$currentTerm")
+        val finalJson =
+            performRequest("https://banservices.bau.edu.lb/StudentRegistrationSsb/ssb/classRegistration/getMeetingInformationForRegistrations").get()
+                .getBody()
+
+        val coursesType = object : TypeToken<List<Course>>() {}.type
+        val courses = Gson().fromJson<List<Course>>(finalJson, coursesType)
+        return courses
+    }
+
     private fun performRequest(request: Request): CompletableFuture<Response> {
         val responseFuture = CompletableFuture<Response>()
 
@@ -333,11 +214,9 @@ class LocalApi(
         // keep in mind future needs to block to get result
         val responseFuture = CompletableFuture<Response>()
         val request: Request =
-            Request.Builder().url(url).request(method, body).removeHeader("User-Agent")
-                .addHeader(
-                    "User-Agent",
-                    this.userAgent
-                ) // remove and add header to override default OKHTTP header
+            Request.Builder().url(url).request(method, body).removeHeader("User-Agent").addHeader(
+                "User-Agent", this.userAgent
+            ) // remove and add header to override default OKHTTP header
                 .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -376,18 +255,16 @@ class LocalApi(
         val cookieManager = CookieManager()
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
         val cookieJar = JavaNetCookieJar(cookieManager)
-        val timeoutSeconds = 120L
+        val timeoutSeconds = 240L
         val logger = HttpLoggingInterceptor()
         logger.setLevel(HttpLoggingInterceptor.Level.BASIC)
-        val client = OkHttpClient.Builder()
-            .cache(
-                Cache(
-                    directory = context.cacheDir,
-                    maxSize = 10L * 1024L * 1024L
-                )
+        val client = OkHttpClient.Builder().cache(
+            Cache(
+                directory = context.cacheDir, maxSize = 10L * 1024L * 1024L
             )
+        )
 
-            .cookieJar(cookieJar).followRedirects(true)
+            .addInterceptor(logger).cookieJar(cookieJar).followRedirects(true)
             .connectTimeout(timeoutSeconds, TimeUnit.SECONDS)
             .writeTimeout(timeoutSeconds, TimeUnit.SECONDS)
             .readTimeout(timeoutSeconds, TimeUnit.SECONDS)
@@ -432,7 +309,7 @@ class LocalApi(
                     serializeToPreferencesIfNotFound(
                         preferences, cacheKey, serializedOutput, true
                     )
-                }.join()
+                }
             } catch (e: ExecutionException) {
                 logStackTrace("HTTP Tag", e)
             } catch (e: InterruptedException) {
@@ -467,8 +344,8 @@ class LocalApi(
 //        return getCachedJsonTimestamp()!!.toHours() >= 8
 //    }
 
-
 }
+
 
 //class FailedToScrapeException(s: String) : Exception() {
 //

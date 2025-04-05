@@ -3,10 +3,17 @@
     <string name="user_id">User ID:</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">BetterMoodle Schedule</string>
     <string name="appwidget_text">BetterMoodle Schedule</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">BetterMoodle Schedule Widget</string>
     <string name="search">Search</string>
+    <string-array name="my_header_title">
+        <item />
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+    </string-array>
 </resources>

@@ -7,12 +7,15 @@ import android.util.Base64
 import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.lang.reflect.Type
 import java.security.GeneralSecurityException
 
 
@@ -32,7 +35,7 @@ fun clearPrefs(context: Context) {
     prefs!!.edit().clear().apply()
 }
 
-fun getPrefs(context: Context): EncryptedSharedPreferences? {
+fun getPrefs(context: Context): EncryptedSharedPreferences {
     var masterKeyAlias: String? = null
     try {
         masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
@@ -54,7 +57,7 @@ fun getPrefs(context: Context): EncryptedSharedPreferences? {
     } catch (e: IOException) {
         logStackTrace("Security Tag", e)
     }
-    return sharedPreferences
+    return sharedPreferences!!
 }
 
 @JvmOverloads
@@ -106,4 +109,12 @@ fun b64ToBitmap(encodedString: String): Bitmap {
 
 }
 
+inline fun <reified T> getTokenTypeList(): Type {
+    val listType = object : TypeToken<ArrayList<T>>() {}.type
+    return listType
+}
 
+inline fun <reified T> deserializetoListType(string: String): T {
+    val listType = object : TypeToken<ArrayList<T>>() {}.type
+    return Gson().fromJson(string, listType)
+}

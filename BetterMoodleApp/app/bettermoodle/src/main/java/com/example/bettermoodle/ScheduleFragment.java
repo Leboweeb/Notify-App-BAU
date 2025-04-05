@@ -11,16 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.islandparadise14.mintable.MinTimeTableView;
+import com.islandparadise14.mintable.model.ScheduleEntity;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ScheduleFragment extends Fragment {
 
-    private Context context;
-//    private ScheduleModel model;
+    private ScheduleUtils scheduleUtils;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.context = context;
     }
 
     @Override
@@ -33,26 +40,32 @@ public class ScheduleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button refreshButton = view.findViewById(R.id.refreshButton);
         Button refreshColors = view.findViewById(R.id.refreshColors);
+        LocalApi localApi = new LocalApi(requireContext());
+        this.scheduleUtils = new ScheduleUtils(requireContext());
         refreshButton.setOnClickListener(v -> {
-//            this.model.setSchedule(true, false);
+            this.scheduleUtils.refreshSchedule(true, false);
         });
         refreshColors.setOnClickListener(v -> {
-//            this.model.setSchedule(false, true);
+            this.scheduleUtils.refreshSchedule(false, true);
+        });
+        MinTimeTableView table = view.findViewById(R.id.weekView);
+        table.initTable(List.of("Mon", "Tue", "Wen", "Thu", "Fri").toArray(new String[5]));
+        localApi.postResponseToListener(localApi::getSchedule, s -> {
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<Course>>() {
+            }.getType();
+            return gson.fromJson(s, listType);
+        }, Services.SCHEDULE.getCacheKey()).observe(getViewLifecycleOwner(), courses -> {
+            ArrayList<ScheduleEntity> events = this.scheduleUtils.populateEvents(courses);
+            table.updateSchedules(events);
         });
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        ScheduleModel scheduleModel = new ScheduleModel(this.context);
-//        this.model = scheduleModel;
-        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
-//        MinTimeTableView table = view.findViewById(R.id.weekView);
-//        table.initTable(List.of("Mon", "Tue", "Wen", "Thu", "Fri").toArray(new String[5]));
-//        scheduleModel.setSchedule();
-//        LiveData<ArrayList<ScheduleEntity>> data = scheduleModel.getEvents();
-//        data.observe(getViewLifecycleOwner(), table::updateSchedules);
-        return view;
+        return inflater.inflate(R.layout.fragment_schedule, container, false);
     }
+
+
 }
