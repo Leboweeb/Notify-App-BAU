@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
@@ -133,4 +134,19 @@ fun getActivity(context: Context?): Activity? {
     }
 
     return null
+}
+
+fun clearFragmentCache(fragment: Fragment, context: Context) {
+    // application context is fine here
+    var cacheKeyToClear = ""
+//    if (fragment is HomeFragment) {}
+    cacheKeyToClear = when (fragment) {
+        is HomeFragment -> Services.XFILES.cacheKey
+        is NotificationsFragment -> Services.NOTIFICATIONS.cacheKey
+        is ScheduleFragment -> Services.SCHEDULE.cacheKey
+        else -> ""
+    }
+
+    val prefs = getPrefs(context)
+    prefs.edit().remove(cacheKeyToClear).apply()
 }

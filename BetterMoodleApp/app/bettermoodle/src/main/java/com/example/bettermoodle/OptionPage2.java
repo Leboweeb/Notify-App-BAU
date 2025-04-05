@@ -32,9 +32,11 @@ public class OptionPage2 extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // refresh fragment frame layout
                 Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
                 assert currentFragment != null;
+                // before reconstructing view, clear cache key for the current fragment
+                UtilsKt.clearFragmentCache(currentFragment, getApplicationContext());
+                // then refresh fragment frame layout
                 FragmentManager fm = getSupportFragmentManager();
                 fm.beginTransaction().detach(currentFragment).commit();
                 fm.beginTransaction().attach(currentFragment).commit();
