@@ -11,14 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 
 
-
 public class HomeFragment extends Fragment {
-    SwipeRefreshLayout swipeRefreshLayout;
     // Method to update user information
     private void updateUserInfo(View view) {
         TextView userName = view.findViewById(R.id.student_name);
@@ -61,14 +58,14 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        swipeRefreshLayout = view.findViewById(R.id.swipe);
+//        swipeRefreshLayout = view.findViewById(R.id.swipe);
         updateUserInfo(view);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updateUserInfo(view);
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                updateUserInfo(view);
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
     }
 }

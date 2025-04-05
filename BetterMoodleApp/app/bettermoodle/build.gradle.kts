@@ -70,5 +70,4 @@ dependencies {
     implementation("com.google.code.gson:gson:2.12.1")
     implementation("org.jsoup:jsoup:1.14.3")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    implementation("com.github.tlaabs:TimetableView:1.0.3-fx1")
 }

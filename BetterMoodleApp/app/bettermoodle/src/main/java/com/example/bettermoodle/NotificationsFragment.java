@@ -36,7 +36,7 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
     private ArrayAdapter<String> arrayAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
 
-    private void updateNotifications(View view){
+    private void updateNotifications(View view) {
         listView = requireView().findViewById(R.id.listView);
         searchView = requireView().findViewById(R.id.SearchView);
         localApi.postResponseToListener(localApi::getMoodleNotifications, (notificationsJson) -> {
@@ -83,15 +83,7 @@ public class NotificationsFragment extends Fragment implements MenuProvider {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        swipeRefreshLayout = view.findViewById(R.id.swipe);
         updateNotifications(view);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updateNotifications(view);
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
     }
 
     //Search Bar Code:

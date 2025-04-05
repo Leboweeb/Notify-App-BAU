@@ -38,7 +38,7 @@ class LocalApi(
     private val authURL = "https://eis.bau.edu.lb/commonauth"
     private val client = httpClientBuilder()
     private val preferences =
-        getPrefs(context) ?: throw Exception("Couldn't retrieve encrypted shared prefs!")
+        getPrefs(context)
     private val username = preferences.getString("username", "") ?: ""
     private val password = preferences.getString("password", "") ?: ""
 
@@ -299,8 +299,13 @@ class LocalApi(
         // NOTE: cache key sample strings will be "moodle/notifications" or "iconnect/xfiles" similar to an HTTP endpoint for clarity.
         cacheKey: String,
     ): MutableLiveData<T> {
+        val activity = getActivity(this.context)
+            ?: throw Exception("Couldn't get Activity from ActivityContext ! It's probably an ApplicationContext instead.")
         val liveData = MutableLiveData<T>()
         if (getCachedJson(cacheKey) == "" || forceNetwork) {
+            // only start loading screen on network request
+            val loadingScreen = LoadingScreen(activity)
+            loadingScreen.startLoadingDialog()
             try {
                 thread(start = true) {
                     val output = callback()
@@ -309,6 +314,10 @@ class LocalApi(
                     serializeToPreferencesIfNotFound(
                         preferences, cacheKey, serializedOutput, true
                     )
+                    activity.runOnUiThread {
+                        // the request is done, remove loading dialog
+                        loadingScreen.dismissDialog()
+                    }
                 }
             } catch (e: ExecutionException) {
                 logStackTrace("HTTP Tag", e)

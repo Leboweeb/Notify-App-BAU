@@ -7,8 +7,6 @@
     tools:context=".ScheduleFragment">
 
 
-    <!--    &lt;!&ndash;suppress AndroidUnknownAttribute &ndash;&gt;-->
-
     <com.islandparadise14.mintable.MinTimeTableView
         android:id="@+id/weekView"
         android:layout_width="match_parent"

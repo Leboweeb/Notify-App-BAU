@@ -1,6 +1,8 @@
 package com.example.bettermoodle
 
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -32,7 +34,7 @@ fun logStackTrace(tag: String, e: Exception) {
 
 fun clearPrefs(context: Context) {
     val prefs = getPrefs(context)
-    prefs!!.edit().clear().apply()
+    prefs.edit().clear().apply()
 }
 
 fun getPrefs(context: Context): EncryptedSharedPreferences {
@@ -117,4 +119,18 @@ inline fun <reified T> getTokenTypeList(): Type {
 inline fun <reified T> deserializetoListType(string: String): T {
     val listType = object : TypeToken<ArrayList<T>>() {}.type
     return Gson().fromJson(string, listType)
+}
+
+fun getActivity(context: Context?): Activity? {
+    if (context == null) {
+        return null
+    } else if (context is ContextWrapper) {
+        return if (context is Activity) {
+            context
+        } else {
+            getActivity(context.baseContext)
+        }
+    }
+
+    return null
 }

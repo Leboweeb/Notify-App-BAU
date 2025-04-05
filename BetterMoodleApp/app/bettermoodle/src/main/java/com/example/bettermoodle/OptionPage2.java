@@ -1,12 +1,13 @@
 package com.example.bettermoodle;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -27,6 +28,19 @@ public class OptionPage2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.optionpage2);
+        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe_fragment);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // refresh fragment frame layout
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+                assert currentFragment != null;
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction().detach(currentFragment).commit();
+                fm.beginTransaction().attach(currentFragment).commit();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         // the home fragment is the default fragment.
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
@@ -72,12 +86,5 @@ public class OptionPage2 extends AppCompatActivity {
         }
     }
 
-    private void updateNavigationBarState(int actionId) {
-        Menu menu = bottomNavigationView.getMenu();
 
-        for (int i = 0, size = menu.size(); i < size; i++) {
-            MenuItem item = menu.getItem(i);
-            item.setChecked(item.getItemId() == actionId);
-        }
-    }
 }

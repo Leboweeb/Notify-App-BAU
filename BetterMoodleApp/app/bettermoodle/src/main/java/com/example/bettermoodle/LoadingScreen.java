@@ -5,14 +5,14 @@ import android.app.AlertDialog;
 import android.view.LayoutInflater;
 
 public class LoadingScreen {
-    private Activity activity;
+    private final Activity activity;
     private AlertDialog dialog;
 
-    LoadingScreen(Activity myActivity){
+    LoadingScreen(Activity myActivity) {
         activity = myActivity;
     }
 
-    void startLoadingDialog(){
+    void startLoadingDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -21,7 +21,8 @@ public class LoadingScreen {
         dialog = builder.create();
         dialog.show();
     }
-    void dismissDialog(){
+
+    void dismissDialog() {
         dialog.dismiss();
     }
 }
