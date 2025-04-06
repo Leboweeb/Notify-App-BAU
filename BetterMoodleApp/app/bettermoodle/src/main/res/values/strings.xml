@@ -8,6 +8,7 @@
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">BetterMoodle Schedule Widget</string>
     <string name="search">Search</string>
+    <string name="logout">Logout</string>
     <string-array name="my_header_title">
         <item />
         <item>Mon</item>
