@@ -38,16 +38,12 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button refreshButton = view.findViewById(R.id.refreshButton);
-        Button refreshColors = view.findViewById(R.id.refreshColors);
+//        Button refreshColors = view.findViewById(R.id.refreshColors);
         LocalApi localApi = new LocalApi(requireContext());
         this.scheduleUtils = new ScheduleUtils(requireContext());
-        refreshButton.setOnClickListener(v -> {
-            this.scheduleUtils.refreshSchedule(true, false);
-        });
-        refreshColors.setOnClickListener(v -> {
-            this.scheduleUtils.refreshSchedule(false, true);
-        });
+//        refreshColors.setOnClickListener(v -> {
+//            this.scheduleUtils.refreshSchedule(false, true);
+//        });
         MinTimeTableView table = view.findViewById(R.id.weekView);
         table.initTable(List.of("Mon", "Tue", "Wen", "Thu", "Fri").toArray(new String[5]));
         localApi.postResponseToListener(localApi::getSchedule, s -> {
