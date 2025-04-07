@@ -246,21 +246,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_data_collection" />
 
-            <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="320dp"
-                android:layout_height="60dp"
-
-                android:background="#F4872A"
-                android:backgroundTint="#F4872A"
-                android:text="@string/logout"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
-                app:strokeColor="#F4872A"
-                tools:layout_editor_absoluteX="27dp"
-                tools:layout_editor_absoluteY="626dp" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="319dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="46dp"
+
+        android:layout_marginTop="500dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="16dp"
+        android:background="#F4872A"
+        android:backgroundTint="#F4872A"
+        android:text="@string/logout"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.958"
+        app:strokeColor="#F4872A" />
 </androidx.constraintlayout.widget.ConstraintLayout>
