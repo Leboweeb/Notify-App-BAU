@@ -46,6 +46,7 @@ public class ScheduleFragment extends Fragment {
 //        });
         MinTimeTableView table = view.findViewById(R.id.weekView);
         table.initTable(List.of("Mon", "Tue", "Wen", "Thu", "Fri").toArray(new String[5]));
+
         localApi.postResponseToListener(localApi::getSchedule, s -> {
             Gson gson = new Gson();
             Type listType = new TypeToken<List<Course>>() {

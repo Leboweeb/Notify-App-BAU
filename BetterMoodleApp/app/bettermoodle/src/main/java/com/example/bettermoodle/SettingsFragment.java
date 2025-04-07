@@ -1,29 +1,24 @@
 package com.example.bettermoodle;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
 
-
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-
-
 
 
 public class SettingsFragment extends Fragment {
@@ -35,8 +30,6 @@ public class SettingsFragment extends Fragment {
     private static final String KEY_LANGUAGE = "language";
     private static final String KEY_PUSH_NOTIFICATIONS = "push_notifications";
     private static final String KEY_EMAIL_NOTIFICATIONS = "email_notifications";
-    private static final String KEY_BIOMETRIC_LOGIN = "biometric_login";
-    private static final String KEY_DATA_COLLECTION = "data_collection";
 
     private SharedPreferences sharedPreferences;
 
@@ -60,18 +53,15 @@ public class SettingsFragment extends Fragment {
 
         // Initialize the logout button
         Button btnLogout;
+        SwitchMaterial nightModeSwitch = new SwitchMaterial(this.requireContext());
+
         btnLogout = view.findViewById(R.id.btnLogout);
 
         // Set click listener for logout button
         btnLogout.setOnClickListener(v -> logout());
-
         setupNightModeSwitch(view);
-        setupFontSizeSpinner(view);
-        setupLanguageSpinner(view);
-        setupNotificationSwitches(view);
-        setupPrivacySwitches(view);
-        setupClearCacheButton(view);
     }
+
 
     private void setupNightModeSwitch(View view) {
         SwitchMaterial nightModeSwitch = view.findViewById(R.id.night_mode_switch);
@@ -188,38 +178,6 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    private void setupPrivacySwitches(View view) {
-        SwitchMaterial biometricLoginSwitch = view.findViewById(R.id.switch_biometric_login);
-        SwitchMaterial dataCollectionSwitch = view.findViewById(R.id.switch_data_collection);
-
-        // Set initial states
-        boolean biometricEnabled = sharedPreferences.getBoolean(KEY_BIOMETRIC_LOGIN, false);
-        boolean dataCollectionEnabled = sharedPreferences.getBoolean(KEY_DATA_COLLECTION, true);
-
-        biometricLoginSwitch.setChecked(biometricEnabled);
-        dataCollectionSwitch.setChecked(dataCollectionEnabled);
-
-        // Set listeners
-        biometricLoginSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            sharedPreferences.edit().putBoolean(KEY_BIOMETRIC_LOGIN, isChecked).apply();
-            // Here you would configure biometric authentication in a real app
-        });
-
-        dataCollectionSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            sharedPreferences.edit().putBoolean(KEY_DATA_COLLECTION, isChecked).apply();
-            // Here you would configure analytics collection in a real app
-        });
-    }
-
-    private void setupClearCacheButton(View view) {
-        MaterialButton clearCacheButton = view.findViewById(R.id.btn_clear_cache);
-
-        clearCacheButton.setOnClickListener(v -> {
-            // In a real app, you would clear the app's cache here
-            Toast.makeText(requireContext(), "Cache cleared", Toast.LENGTH_SHORT).show();
-        });
-    }
-
     private void applyFontSize(int fontSizeIndex) {
         // In a real app, you would change the app's font scale factor
         // This is just a placeholder to show toast feedback
@@ -228,44 +186,25 @@ public class SettingsFragment extends Fragment {
     }
 
 
-
     public SettingsFragment() {
-            // Required empty public constructor
-        }
+        // Required empty public constructor
+    }
 
-        public static SettingsFragment newInstance() {
-            return new SettingsFragment();
-        }
-
-//        @Override
-//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                                 Bundle savedInstanceState) {
-//            // Inflate the layout for this fragment
-//            return inflater.inflate(R.layout.fragment_settings, container, false);
-//        }
-//
-//        @Override
-//        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//            super.onViewCreated(view, savedInstanceState);
-//
-//            // Initialize the logout button
-//            Button btnLogout;
-//            btnLogout = view.findViewById(R.id.btnLogout);
-//
-//            // Set click listener for logout button
-//            btnLogout.setOnClickListener(v -> logout());
-//        }
-
-        private void logout() {
-
-            UtilsKt.clearPrefs(requireContext());
-            Intent intent = new Intent(requireActivity(), MainActivity.class);
-            startActivity(intent);
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
+    }
 
 
-                Toast.makeText(getActivity(), "Logged out successfully", Toast.LENGTH_SHORT).show();
+    private void logout() {
 
-        }
+        UtilsKt.clearPrefs(requireContext());
+        Intent intent = new Intent(requireActivity(), MainActivity.class);
+        startActivity(intent);
+
+
+        Toast.makeText(getActivity(), "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+    }
 
 
 }

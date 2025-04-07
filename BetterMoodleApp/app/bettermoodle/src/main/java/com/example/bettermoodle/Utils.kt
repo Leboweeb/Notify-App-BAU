@@ -5,8 +5,11 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Handler
+import android.os.Looper
 import android.util.Base64
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
@@ -149,4 +152,10 @@ fun clearFragmentCache(fragment: Fragment, context: Context) {
 
     val prefs = getPrefs(context)
     prefs.edit().remove(cacheKeyToClear).apply()
+}
+
+fun showToastMessage(context: Context, message: String?) {
+    val handler: Handler = Handler(Looper.getMainLooper())
+
+    handler.post(Runnable { Toast.makeText(context, message, Toast.LENGTH_LONG).show() })
 }

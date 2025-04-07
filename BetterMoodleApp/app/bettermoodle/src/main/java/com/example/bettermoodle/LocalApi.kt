@@ -309,17 +309,31 @@ class LocalApi(
             loadingScreen.startLoadingDialog()
             try {
                 thread(start = true) {
-                    val output = callback()
-                    val serializedOutput = Gson().toJson(output)
-                    liveData.postValue(output)
-                    serializeToPreferencesIfNotFound(
-                        preferences, cacheKey, serializedOutput, true
-                    )
-                    activity.runOnUiThread {
-                        // the request is done, remove loading dialog
-                        loadingScreen.dismissDialog()
-//                        Toast.makeText(activity.applicationContext, "Oops!", Toast.LENGTH_LONG).show()
+                    try {
+                        val output: T = callback()
+                        val serializedOutput = Gson().toJson(output)
+                        liveData.postValue(output)
+                        serializeToPreferencesIfNotFound(
+                            preferences, cacheKey, serializedOutput, true
+                        )
+                        activity.runOnUiThread {
+                            // the request is done, remove loading dialog
+                            loadingScreen.dismissDialog()
+                        }
+                    } catch (
+                        e: Exception
+                    ) {
+                        activity.runOnUiThread {
+                            Toast.makeText(
+                                activity,
+                                "Oops! Please refresh current page.",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
 
+                            loadingScreen.dismissDialog()
+                        }
+                        logStackTrace("HTTP Tag", e)
                     }
                 }
             } catch (e: ExecutionException) {
