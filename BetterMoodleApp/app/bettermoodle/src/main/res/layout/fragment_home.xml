@@ -51,7 +51,7 @@
             android:layout_marginStart="180dp"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/segoeui"
-            android:text="Mohammad Omar Youssef Shahbaz"
+            android:text="[Student Name]"
             android:textSize="20sp">
 
         </TextView>
@@ -63,7 +63,7 @@
             android:layout_marginStart="180dp"
             android:layout_marginTop="100dp"
             android:fontFamily="@font/segoeui"
-            android:text="202200578"
+            android:text="[Student ID]"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/def_user_photo"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,9 +117,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/segoeui"
-                    android:gravity="center_horizontal"
+                    android:layout_gravity= "center_horizontal"
                     android:paddingHorizontal="12dp"
-                    android:text="Computer Engineering"
+                    android:text="[Program]"
                     android:textSize="20sp"></TextView>
 
 
@@ -164,9 +164,8 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/segoeui"
-                    android:gravity="center"
                     android:padding="10dp"
-                    android:text="4.0"
+                    android:text="[CGPA]"
                     android:textSize="20sp"></TextView>
 
             </LinearLayout>
@@ -225,7 +224,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/segoeui"
                     android:padding="10dp"
-                    android:text="4.0"
+                    android:text="[SGPA]"
                     android:textSize="20sp"></TextView>
 
             </LinearLayout>
@@ -270,7 +269,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/segoeui"
                     android:padding="10dp"
-                    android:text="150"
+                    android:text="[Credits]"
                     android:textSize="20sp">
 
                 </TextView>
