@@ -120,7 +120,8 @@
                     android:layout_gravity= "center_horizontal"
                     android:paddingHorizontal="12dp"
                     android:text="[Program]"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp">
+                </TextView>
 
 
             </LinearLayout>
@@ -154,7 +155,8 @@
                     android:gravity="center"
                     android:text="CGPA"
                     android:textSize="20sp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+                </TextView>
 
                 <TextView
                     android:id="@+id/CGPA_value"
@@ -166,7 +168,8 @@
                     android:fontFamily="@font/segoeui"
                     android:padding="10dp"
                     android:text="[CGPA]"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp">
+                </TextView>
 
             </LinearLayout>
 
@@ -225,7 +228,8 @@
                     android:fontFamily="@font/segoeui"
                     android:padding="10dp"
                     android:text="[SGPA]"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp">
+                </TextView>
 
             </LinearLayout>
 
