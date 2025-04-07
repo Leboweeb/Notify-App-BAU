@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation("com.makeramen:roundedimageview:2.3.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.security:security-crypto:1.0.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

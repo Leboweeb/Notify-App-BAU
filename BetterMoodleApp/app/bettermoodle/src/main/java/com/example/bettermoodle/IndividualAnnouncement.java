@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.text.util.Linkify;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +28,8 @@ public class IndividualAnnouncement extends AppCompatActivity {
         String message = intent.getStringExtra("message");
 //        notification_header.setText(header);
         notification_body.setText(message);
+        //Make links:
+        Linkify.addLinks(notification_body, Linkify.WEB_URLS);
     }
 
 

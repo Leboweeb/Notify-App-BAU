@@ -3,6 +3,7 @@ package com.example.bettermoodle
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -317,6 +318,8 @@ class LocalApi(
                     activity.runOnUiThread {
                         // the request is done, remove loading dialog
                         loadingScreen.dismissDialog()
+//                        Toast.makeText(activity.applicationContext, "Oops!", Toast.LENGTH_LONG).show()
+
                     }
                 }
             } catch (e: ExecutionException) {
