@@ -23,6 +23,7 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.lang.reflect.Type
 import java.security.GeneralSecurityException
+import java.util.Locale
 
 
 enum class HTTPMethod {
@@ -116,8 +117,13 @@ fun b64ToBitmap(encodedString: String): Bitmap {
 }
 
 inline fun <reified T> getTokenTypeList(): Type {
-    val listType = object : TypeToken<ArrayList<T>>() {}.type
+    val listType = object : TypeToken<List<T>>() {}.type
     return listType
+}
+
+inline fun <reified T> gsonSerialze(json: String): List<T> {
+    val type = getTokenTypeList<T>()
+    return Gson().fromJson(json, type)
 }
 
 inline fun <reified T> deserializetoListType(string: String): T {
@@ -158,4 +164,23 @@ fun showToastMessage(context: Context, message: String?) {
     val handler: Handler = Handler(Looper.getMainLooper())
 
     handler.post(Runnable { Toast.makeText(context, message, Toast.LENGTH_LONG).show() })
+}
+
+fun getResourceString(name: String, context: Context): String {
+    val nameResourceID: Int =
+        context.resources.getIdentifier(name, "string", context.applicationInfo.packageName)
+    require(nameResourceID != 0) { "No resource string found with name $name" }
+    return context.getString(nameResourceID)
+}
+
+/**
+ * Replacement for Kotlin's deprecated `capitalize()` function.
+ * see https://stackoverflow.com/questions/67843986/is-there-a-shorter-replacement-for-kotlins-deprecated-string-capitalize-funct for more details
+ */
+fun String.capitalized(): String {
+    return this.replaceFirstChar {
+        if (it.isLowerCase())
+            it.titlecase(Locale.getDefault())
+        else it.toString()
+    }
 }

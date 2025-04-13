@@ -9,6 +9,9 @@
     <string name="app_widget_description">BetterMoodle Schedule Widget</string>
     <string name="search">Search</string>
     <string name="logout">Logout</string>
+    <string name="time">Time</string>
+    <string name="activity">Activity</string>
+    <string name="today_s_schedule">Today\'s Schedule</string>
     <string-array name="my_header_title">
         <item />
         <item>Mon</item>

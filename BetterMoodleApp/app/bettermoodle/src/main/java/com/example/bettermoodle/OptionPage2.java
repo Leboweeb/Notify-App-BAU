@@ -1,5 +1,6 @@
 package com.example.bettermoodle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -28,20 +29,24 @@ public class OptionPage2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.optionpage2);
+        // handle redirect intent from widget
+        Intent intent = getIntent();
+        String value = intent.getStringExtra("destination"); // Retrieve the extra data
+        if (value != null) {
+            navigateToFragment(scheduleFragment);
+            return;
+        }
         SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe_fragment);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
-                assert currentFragment != null;
-                // before reconstructing view, clear cache key for the current fragment
-                UtilsKt.clearFragmentCache(currentFragment, getApplicationContext());
-                // then refresh fragment frame layout
-                FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction().detach(currentFragment).commit();
-                fm.beginTransaction().attach(currentFragment).commit();
-                swipeRefreshLayout.setRefreshing(false);
-            }
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+            assert currentFragment != null;
+            // before reconstructing view, clear cache key for the current fragment
+            UtilsKt.clearFragmentCache(currentFragment, getApplicationContext());
+            // then refresh fragment frame layout
+            FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction().detach(currentFragment).commit();
+            fm.beginTransaction().attach(currentFragment).commit();
+            swipeRefreshLayout.setRefreshing(false);
         });
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         // the home fragment is the default fragment.

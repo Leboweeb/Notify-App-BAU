@@ -149,7 +149,6 @@ data class Course(
     @SerializedName("courseReferenceNumber") var crn: String? = null,
     @SerializedName("subjectCourse") var courseCode: String? = null,
     @SerializedName("meetingTimes") @Expose var meetingTimes: List<MeetingTime>
-
 )
 
 data class MeetingTime(
