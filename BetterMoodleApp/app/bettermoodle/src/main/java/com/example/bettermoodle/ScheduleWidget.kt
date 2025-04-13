@@ -7,7 +7,6 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
-import androidx.appcompat.app.AppCompatActivity
 import java.time.LocalDate
 
 /**
@@ -93,7 +92,6 @@ internal fun updateAppWidget(
     val views = RemoteViews(context.packageName, R.layout.schedule_widget)
     // handle widget click
     val prefs = getPrefs(context)
-    val targetClass: Class<out AppCompatActivity>
     val intent: Intent
     if (prefs.contains("username") && prefs.contains("password")) {
         intent = Intent(context, OptionPage2::class.java)
@@ -108,7 +106,7 @@ internal fun updateAppWidget(
 
 
     views.setOnClickPendingIntent(
-        R.id.scheduleRoot, pendingIntent
+        R.id.schedule_grid, pendingIntent
     )
     // Instruct the widget manager to update the widget
     views.setTextViewText(R.id.schedule_title, "${getTargetedDay().capitalized()} Schedule")
