@@ -346,8 +346,11 @@ class LocalApi(
             // if we already have a response, just return from cache
             // THIS CLASS IS NOT RESPONSIBLE FOR REFRESHING DATA
             // MAKE SURE ANOTHER CLASS DOES
-            val cachedJson = getCachedJson(cacheKey)
-            liveData.postValue(deserializer(cachedJson))
+            thread(start = true) {
+                // read shared preferences on different thread. Small I/O lag, but very noticeable for users so start on new thread.
+                val cachedJson = getCachedJson(cacheKey)
+                liveData.postValue(deserializer(cachedJson))
+            }
         }
         return liveData
     }

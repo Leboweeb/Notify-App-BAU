@@ -4,14 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 
 public class OptionPage2 extends AppCompatActivity {
@@ -34,43 +30,35 @@ public class OptionPage2 extends AppCompatActivity {
         String value = intent.getStringExtra("destination"); // Retrieve the extra data
         if (value != null) {
             navigateToFragment(scheduleFragment);
-            return;
+            // once fragment actually renders, select schedule icon from bottom nav bar menu
+            getWindow().getDecorView().post(
+                    () -> {
+                        MenuItem scheduleItem = bottomNavigationView.getMenu().getItem(2);
+                        bottomNavigationView.setSelectedItemId(scheduleItem.getItemId());
+                    }
+            );
+        } else {
+            // no redirect, go to home fragment as default
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         }
-        SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.swipe_fragment);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
-            assert currentFragment != null;
-            // before reconstructing view, clear cache key for the current fragment
-            UtilsKt.clearFragmentCache(currentFragment, getApplicationContext());
-            // then refresh fragment frame layout
-            FragmentManager fm = getSupportFragmentManager();
-            fm.beginTransaction().detach(currentFragment).commit();
-            fm.beginTransaction().attach(currentFragment).commit();
-            swipeRefreshLayout.setRefreshing(false);
-        });
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // the home fragment is the default fragment.
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId == R.id.home) {
-                    navigateToFragment(homeFragment);
-                    return true;
-                } else if (itemId == R.id.notification) {
-                    navigateToFragment(notificationFragment);
-                    return true;
-                } else if (itemId == R.id.schedule) {
-                    navigateToFragment(scheduleFragment);
-                    return true;
-                } else if (itemId == R.id.settings) {
-                    navigateToFragment(settingsFragment);
-                    return true;
-                }
-                mSelectedItem = itemId;
-                return false;
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.home) {
+                navigateToFragment(homeFragment);
+                return true;
+            } else if (itemId == R.id.notification) {
+                navigateToFragment(notificationFragment);
+                return true;
+            } else if (itemId == R.id.schedule) {
+                navigateToFragment(scheduleFragment);
+                return true;
+            } else if (itemId == R.id.settings) {
+                navigateToFragment(settingsFragment);
+                return true;
             }
+            mSelectedItem = itemId;
+            return false;
         });
 
     }

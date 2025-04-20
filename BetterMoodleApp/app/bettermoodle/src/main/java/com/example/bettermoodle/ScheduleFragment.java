@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -38,12 +40,21 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        Button refreshColors = view.findViewById(R.id.refreshColors);
+        SwipeRefreshLayout swipeRefreshLayout = requireView().findViewById(R.id.swipe_fragment);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            FragmentActivity activity = requireActivity();
+            Fragment currentFragment = requireActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+            assert currentFragment != null;
+            // before reconstructing view, clear cache key for the current fragment
+            UtilsKt.clearFragmentCache(currentFragment, requireContext());
+            // then refresh fragment frame layout
+            FragmentManager fm = activity.getSupportFragmentManager();
+            fm.beginTransaction().detach(currentFragment).commit();
+            fm.beginTransaction().attach(currentFragment).commit();
+            swipeRefreshLayout.setRefreshing(false);
+        });
         LocalApi localApi = new LocalApi(requireContext());
         this.scheduleUtils = new ScheduleUtils(requireContext());
-//        refreshColors.setOnClickListener(v -> {
-//            this.scheduleUtils.refreshSchedule(false, true);
-//        });
         MinTimeTableView table = view.findViewById(R.id.weekView);
         table.initTable(List.of("Mon", "Tue", "Wen", "Thu", "Fri").toArray(new String[5]));
 

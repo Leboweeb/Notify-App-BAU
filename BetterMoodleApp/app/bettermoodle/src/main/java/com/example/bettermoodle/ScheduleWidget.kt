@@ -42,8 +42,6 @@ internal fun populateScheduleWidget(context: Context, views: RemoteViews) {
         return
 
     val today = getTargetedDay()
-    // otherwise do nothing and continue
-
     val courseList = gsonSerialze<Course>(scheduleDataJson).filter { course ->
         course.meetingTimes.any {
             it.getDay() == today
@@ -52,7 +50,8 @@ internal fun populateScheduleWidget(context: Context, views: RemoteViews) {
     val meetingTimesPairs = mutableListOf<Pair<MeetingTime, Course>>()
     for (course in courseList) {
         for (meetingTime in course.meetingTimes) {
-            meetingTimesPairs.add(Pair(meetingTime, course))
+            if (meetingTime.getDay() == today)
+                meetingTimesPairs.add(Pair(meetingTime, course))
         }
     }
     val meetingTimesMap = meetingTimesPairs.toMap()

@@ -13,6 +13,9 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -94,6 +97,19 @@ public class NotificationsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        SwipeRefreshLayout swipeRefreshLayout = requireView().findViewById(R.id.swipe_fragment);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            FragmentActivity activity = requireActivity();
+            Fragment currentFragment = requireActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+            assert currentFragment != null;
+            // before reconstructing view, clear cache key for the current fragment
+            UtilsKt.clearFragmentCache(currentFragment, requireContext());
+            // then refresh fragment frame layout
+            FragmentManager fm = activity.getSupportFragmentManager();
+            fm.beginTransaction().detach(currentFragment).commit();
+            fm.beginTransaction().attach(currentFragment).commit();
+            swipeRefreshLayout.setRefreshing(false);
+        });
         updateNotifications();
     }
 

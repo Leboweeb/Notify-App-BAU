@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 
@@ -60,6 +63,20 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 //        swipeRefreshLayout = view.findViewById(R.id.swipe);
         updateUserInfo(view);
+        SwipeRefreshLayout swipeRefreshLayout = requireView().findViewById(R.id.swipe_fragment);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            FragmentActivity activity = requireActivity();
+            Fragment currentFragment = requireActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+            assert currentFragment != null;
+            // before reconstructing view, clear cache key for the current fragment
+            UtilsKt.clearFragmentCache(currentFragment, requireContext());
+            // then refresh fragment frame layout
+            FragmentManager fm = activity.getSupportFragmentManager();
+            fm.beginTransaction().detach(currentFragment).commit();
+            fm.beginTransaction().attach(currentFragment).commit();
+            swipeRefreshLayout.setRefreshing(false);
+        });
+
 //        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 //            @Override
 //            public void onRefresh() {
