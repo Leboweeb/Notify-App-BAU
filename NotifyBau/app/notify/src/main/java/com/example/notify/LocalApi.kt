@@ -5,6 +5,9 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -253,9 +256,7 @@ class LocalApi(
     }
 
     private fun httpClientBuilder(): OkHttpClient {
-        val cookieManager = CookieManager()
-        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
-        val cookieJar = JavaNetCookieJar(cookieManager)
+        val cookieJar = PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(context))
         val timeoutSeconds = 240L
         val logger = HttpLoggingInterceptor()
         logger.setLevel(HttpLoggingInterceptor.Level.BASIC)
