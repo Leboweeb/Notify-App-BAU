@@ -2,294 +2,58 @@
 
 
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_fragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_above="@+id/bottom_navigation"
-    android:layout_marginBottom="-80dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/Dashboard"
-        android:background="@color/white"
-        android:layout_marginTop="30dp">
-
-
-        <TextView
-            android:id="@+id/header"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="125dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/segoeui"
-            android:text="Student Info"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/student_info_card"
-            app:layout_constraintStart_toStartOf="parent">
+            android:orientation="horizontal">
 
-        </TextView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/student_info_card"
-            android:layout_width="366dp"
-            android:layout_height="183dp"
-            android:layout_marginTop="60dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="5dp"
-            app:contentPadding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/def_user_photo"
-                android:layout_width="140dp"
-                android:layout_height="160dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/baseline_person_24"
-                app:riv_corner_radius="20dp" />
-
-            <TextView
-                android:id="@+id/student_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="180dp"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/segoeui"
-                android:text="[Student Name]"
-                android:textSize="20sp">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/student_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="180dp"
-                android:layout_marginTop="100dp"
-                android:fontFamily="@font/segoeui"
-                android:text="[Student ID]"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@id/def_user_photo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.cardview.widget.CardView>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/homefragment_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
-        <LinearLayout
-            android:id="@+id/row1"
-            android:layout_width="0dp"
-            android:layout_height="210dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/student_info_card">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/program_card"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/program_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoeui"
-                        android:text="Program"
-                        android:textSize="20sp"
-                        android:textStyle="bold">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/program_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoeui"
-                        android:paddingHorizontal="12dp"
-                        android:text="[Program]"
-                        android:textSize="20sp" />
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabLayout_studentinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/homepage_tab1" />
 
 
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cgpa_card"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardElevation="5dp"
-                app:cardCornerRadius="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/CGPA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoeui"
-                        android:gravity="center"
-                        android:text="CGPA"
-                        android:textSize="20sp"
-                        android:textStyle="bold"></TextView>
-
-                    <TextView
-                        android:id="@+id/CGPA_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoeui"
-                        android:padding="10dp"
-                        android:text="[CGPA]"
-                        android:textSize="20sp"></TextView>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabLayout_financialinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/homepage_tab2" />
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabLayout_grades"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/homepage_tab3" />
+            </com.google.android.material.tabs.TabLayout>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/homefragment_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </androidx.viewpager2.widget.ViewPager2>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/row2"
-            android:layout_width="0dp"
-            android:layout_height="210dp"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/row1"
-            app:layout_constraintVertical_bias="0.0">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/sgpa_card"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="5dp">
+    <FrameLayout
+        android:id="@+id/homefragment_innerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+    </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-                    <TextView
-                        android:id="@+id/SGPA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoeui"
-                        android:text="SGPA"
-                        android:textSize="20sp"
-                        android:textStyle="bold">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/SGPA_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoeui"
-                        android:padding="10dp"
-                        android:text="[SGPA]"
-                        android:textSize="20sp"></TextView>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/credits_card"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/Credits"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoeui"
-                        android:gravity="center"
-                        android:paddingHorizontal="4dp"
-                        android:text="Credits Completed"
-                        android:textSize="20sp"
-                        android:textStyle="bold">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/Credits_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/segoeui"
-                        android:padding="10dp"
-                        android:text="[Credits]"
-                        android:textSize="20sp">
-
-                    </TextView>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 

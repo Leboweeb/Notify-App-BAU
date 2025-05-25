@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
 
 
@@ -44,6 +48,14 @@ public class HomeFragment extends Fragment {
             creditsValue.setText(xFilesInfo.getCreditsCompleted());
         });
     }
+    
+    private void updateFinancialInfo() {
+        
+    }
+    
+    private void updateGrades() {
+        
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -61,8 +73,38 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        swipeRefreshLayout = view.findViewById(R.id.swipe);
-        updateUserInfo(view);
+        FragmentManager childFm = getChildFragmentManager();
+        TabLayout tabLayout = requireView().findViewById(R.id.homefragment_tabs);
+        ViewPager2 viewPager = requireView().findViewById(R.id.homefragment_pager);
+        HomepageAdapter adapter = new HomepageAdapter(childFm,this.getLifecycle());
+        adapter.addFragment(new StudentInfoFragment(), StudentInfoFragment.class.getSimpleName());
+        adapter.addFragment(new FinancialInfoFragment(), FinancialInfoFragment.class.getSimpleName());
+        adapter.addFragment(new GradesFragment(), GradesFragment.class.getSimpleName());
+        viewPager.setAdapter(adapter);
+        tabLayout.addOnTabSelectedListener(
+                new TabLayout.OnTabSelectedListener() {
+                    @Override
+                    public void onTabSelected(TabLayout.Tab tab) {
+                        viewPager.setCurrentItem(tab.getPosition());
+                    }
+
+                    @Override
+                    public void onTabUnselected(TabLayout.Tab tab) {
+
+                    }
+
+                    @Override
+                    public void onTabReselected(TabLayout.Tab tab) {
+
+                    }
+                }
+        );
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                tabLayout.selectTab(tabLayout.getTabAt(position));
+            }
+        });
         SwipeRefreshLayout swipeRefreshLayout = requireView().findViewById(R.id.swipe_fragment);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             FragmentActivity activity = requireActivity();
