@@ -12,37 +12,41 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/homefragment_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabLayout_studentinfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/homepage_tab1" />
-
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabLayout_financialinfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/homepage_tab2" />
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabLayout_grades"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/homepage_tab3" />
             </com.google.android.material.tabs.TabLayout>
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/homefragment_pager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                >
             </androidx.viewpager2.widget.ViewPager2>
+
+
+
+
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:id="@+id/tabLayout_studentinfo"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/homepage_tab1" />-->
+
+
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:id="@+id/tabLayout_financialinfo"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/homepage_tab2" />-->
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:id="@+id/tabLayout_grades"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/homepage_tab3" />-->
         </LinearLayout>
 
 

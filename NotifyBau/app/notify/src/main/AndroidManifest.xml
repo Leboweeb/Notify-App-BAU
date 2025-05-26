@@ -27,7 +27,7 @@
         <activity
             android:name=".OptionPage2"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+             />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -40,7 +40,7 @@
         <activity
             android:name=".IndividualAnnouncement"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            />
     </application>
 
 </manifest>

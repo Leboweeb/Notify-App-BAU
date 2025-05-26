@@ -57,55 +57,10 @@ public class HomeFragment extends Fragment {
         
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
-    }
-
-    //grab info from Iconnect and put it in the respective fields:
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        FragmentManager childFm = getChildFragmentManager();
-        TabLayout tabLayout = requireView().findViewById(R.id.homefragment_tabs);
-        ViewPager2 viewPager = requireView().findViewById(R.id.homefragment_pager);
-        HomepageAdapter adapter = new HomepageAdapter(childFm,this.getLifecycle());
-        adapter.addFragment(new StudentInfoFragment(), StudentInfoFragment.class.getSimpleName());
-        adapter.addFragment(new FinancialInfoFragment(), FinancialInfoFragment.class.getSimpleName());
-        adapter.addFragment(new GradesFragment(), GradesFragment.class.getSimpleName());
-        viewPager.setAdapter(adapter);
-        tabLayout.addOnTabSelectedListener(
-                new TabLayout.OnTabSelectedListener() {
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        viewPager.setCurrentItem(tab.getPosition());
-                    }
-
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-
-                    }
-
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-
-                    }
-                }
-        );
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                tabLayout.selectTab(tabLayout.getTabAt(position));
-            }
-        });
-        SwipeRefreshLayout swipeRefreshLayout = requireView().findViewById(R.id.swipe_fragment);
+    private  void setupRefresh(View view) {
+        SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_fragment);
+        swipeRefreshLayout.setDistanceToTriggerSync(240);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             FragmentActivity activity = requireActivity();
             Fragment currentFragment = requireActivity().getSupportFragmentManager().findFragmentById(R.id.container);
@@ -118,6 +73,41 @@ public class HomeFragment extends Fragment {
             fm.beginTransaction().attach(currentFragment).commit();
             swipeRefreshLayout.setRefreshing(false);
         });
+    }
 
+    private void setupTabs(View view) {
+        FragmentManager childFm = getChildFragmentManager();
+        TabLayout tabLayout = view.findViewById(R.id.homefragment_tabs);
+        ViewPager2 viewPager = view.findViewById(R.id.homefragment_pager);
+        viewPager.setNestedScrollingEnabled(true);
+        HomepageAdapter adapter = new HomepageAdapter(childFm,this.getLifecycle());
+        adapter.addFragment(new StudentInfoFragment(), "Student Info");
+        adapter.addFragment(new FinancialInfoFragment(), "Financial Info");
+        adapter.addFragment(new GradesFragment(), "Grades");
+        viewPager.setAdapter(adapter);
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> tab.setText(adapter.getTabTitle(position))
+        ).attach();
+    }
+
+
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setupRefresh(view);
+        setupTabs(view);
     }
 }
