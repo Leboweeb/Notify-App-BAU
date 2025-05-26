@@ -74,4 +74,5 @@ dependencies {
     implementation("org.jsoup:jsoup:1.14.3")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.github.franmontiel:PersistentCookieJar:v1.0.1")
+    implementation ("com.github.salehyarahmadi:DataTable:v1.0.1")
 }
