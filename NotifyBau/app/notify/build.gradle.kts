@@ -61,7 +61,6 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.1")
     implementation("androidx.core:core-ktx:1.11.0-beta02")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.android.car.ui:car-ui-lib:2.6.0")
     implementation("androidx.work:work-runtime-ktx:2.8.0")
     implementation("androidx.compose.material3:material3-android:1.1.0-beta02")
     testImplementation("junit:junit:4.13.2")
@@ -74,5 +73,4 @@ dependencies {
     implementation("org.jsoup:jsoup:1.14.3")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.github.franmontiel:PersistentCookieJar:v1.0.1")
-    implementation ("com.github.salehyarahmadi:DataTable:v1.0.1")
 }

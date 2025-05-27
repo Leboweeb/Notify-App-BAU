@@ -27,10 +27,13 @@
         <activity
             android:name=".OptionPage2"
             android:exported="true"
+            android:theme="@style/Base.Theme.BetterMoodleApp"
              />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Base.Theme.BetterMoodleApp"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,6 +43,7 @@
         <activity
             android:name=".IndividualAnnouncement"
             android:exported="false"
+            android:theme="@style/Base.Theme.BetterMoodleApp"
             />
     </application>
 
