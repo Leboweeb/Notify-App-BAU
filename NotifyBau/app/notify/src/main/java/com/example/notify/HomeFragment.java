@@ -24,41 +24,11 @@ import com.google.gson.Gson;
 
 public class HomeFragment extends Fragment {
     // Method to update user information
-    private void updateUserInfo(View view) {
-        TextView userName = view.findViewById(R.id.student_name);
-        TextView userId = view.findViewById(R.id.student_id);
-        TextView programValue = view.findViewById(R.id.program_value);
-        TextView cgpa = view.findViewById(R.id.CGPA_value);
-        TextView sgpa = view.findViewById(R.id.SGPA_value);
-        TextView creditsValue = view.findViewById(R.id.Credits_value);
-        ImageView userAvatar = view.findViewById(R.id.def_user_photo);
-        LocalApi localApi = new LocalApi(requireContext());
-        localApi.postResponseToListener(
-                localApi::getXFilesInfo, (xfilesinfoString) -> {
-                    Gson gson = new Gson();
-                    return gson.fromJson(xfilesinfoString, XFilesInfo.class);
-                }, "iconnect/xfiles"
-        ).observe(getViewLifecycleOwner(), xFilesInfo -> {
-            userName.setText(xFilesInfo.getStudentName());
-            userId.setText(xFilesInfo.getStudentID());
-            userAvatar.setImageBitmap(UtilsKt.b64ToBitmap(xFilesInfo.getStudentImage()));
-            programValue.setText(xFilesInfo.getProgram());
-            cgpa.setText(xFilesInfo.getCgpa());
-            sgpa.setText(xFilesInfo.getSgpa());
-            creditsValue.setText(xFilesInfo.getCreditsCompleted());
-        });
-    }
-    
-    private void updateFinancialInfo() {
-        
-    }
-    
-    private void updateGrades() {
-        
-    }
 
-
-    private  void setupRefresh(View view) {
+    private void setupRefresh(View view) {
+        // refresh in home fragment works a bit differently.
+        // current frame is responsible for child fragment layout
+        // which means refreshing parent should effectively remount child which calls their respective onViewCreated functions.
         SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_fragment);
         swipeRefreshLayout.setDistanceToTriggerSync(240);
         swipeRefreshLayout.setOnRefreshListener(() -> {
@@ -80,7 +50,7 @@ public class HomeFragment extends Fragment {
         TabLayout tabLayout = view.findViewById(R.id.homefragment_tabs);
         ViewPager2 viewPager = view.findViewById(R.id.homefragment_pager);
         viewPager.setNestedScrollingEnabled(true);
-        HomepageAdapter adapter = new HomepageAdapter(childFm,this.getLifecycle());
+        HomepageAdapter adapter = new HomepageAdapter(childFm, this.getLifecycle());
         adapter.addFragment(new StudentInfoFragment(), "Student Info");
         adapter.addFragment(new FinancialInfoFragment(), "Financial Info");
         adapter.addFragment(new GradesFragment(), "Grades");
@@ -89,7 +59,6 @@ public class HomeFragment extends Fragment {
                 (tab, position) -> tab.setText(adapter.getTabTitle(position))
         ).attach();
     }
-
 
 
     @Override

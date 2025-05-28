@@ -7,8 +7,8 @@ import okhttp3.HttpUrl.Companion.toHttpUrl
 
 enum class BauService(val url: String, val finalUrl: HttpUrl) {
     ICONNECT(
-        "https://iconnect.bau.edu.lb",
-        "https://mis.bau.edu.lb/web/v12/iconnectv12/base/portalhome.aspx".toHttpUrl()
+        "https://mis.bau.edu.lb/web/v12/iconnectv12/cas/intermediate.aspx?TargetURL=https://mis.bau.edu.lb/web/v12/iconnectv12/base/profileV2.aspx",
+        "https://mis.bau.edu.lb/web/v12/iconnectv12/base/profileV2.aspx".toHttpUrl()
     ),
     MOODLE(
         "https://moodle.bau.edu.lb", "https://moodle.bau.edu.lb/my/".toHttpUrl()
@@ -25,6 +25,11 @@ enum class Services(val cacheKey: String) {
     XFILES("iconnect/xfiles"),
     SCHEDULE("iconnect/schedule")
 }
+data class CourseGrade (
+    val course : String,
+    val credits: Int,
+    val grade : String,
+)
 
 data class XFilesInfo(
     val studentName: String,
@@ -34,7 +39,12 @@ data class XFilesInfo(
     val program: String,
     val cgpa: String,
     val sgpa: String,
-    val creditsCompleted: String
+    val creditsCompleted: String,
+    val remainingPaymentsLBP : Int,
+    val remainingPaymentsUSD: Int,
+    // eg. ( Course, Credits, Grade )
+    val grades : List<CourseGrade>,
+    val holds : List<String>,
 )
 
 class Data {

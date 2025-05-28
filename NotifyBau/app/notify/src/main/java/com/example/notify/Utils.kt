@@ -11,6 +11,7 @@ import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 import com.google.gson.Gson
@@ -171,6 +172,19 @@ fun getResourceString(name: String, context: Context): String {
         context.resources.getIdentifier(name, "string", context.applicationInfo.packageName)
     require(nameResourceID != 0) { "No resource string found with name $name" }
     return context.getString(nameResourceID)
+}
+
+fun postResponseToIconnect(context: Context, lifecycleOwner: LifecycleOwner, callback : (info : XFilesInfo) -> Unit ) {
+    val localApi = LocalApi(context)
+    localApi.postResponseToListener(
+        forceNetwork = false,
+        localApi::getXFilesInfo,   {
+                info : String ->
+            Gson().fromJson(info, XFilesInfo::class.java)
+        }, "iconnect/xfiles"
+    ).observe(lifecycleOwner) {
+        info -> callback(info)
+    }
 }
 
 /**

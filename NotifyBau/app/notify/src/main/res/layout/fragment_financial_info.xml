@@ -206,6 +206,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
+                        android:id="@+id/holds_layout"
                         android:layout_width="match_parent"
                         android:layout_height="158dp"
                         android:orientation="vertical"
