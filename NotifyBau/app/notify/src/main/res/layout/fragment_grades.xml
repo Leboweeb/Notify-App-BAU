@@ -5,9 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".GradesFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/grades_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/gradesComposeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

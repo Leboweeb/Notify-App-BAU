@@ -1,8 +1,6 @@
 package com.example.notify
 
 import android.os.Bundle
-import android.print.PrintAttributes.Margins
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +23,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.view.marginTop
+import androidx.fragment.app.Fragment
 
 class GradesFragment : Fragment() {
     override fun onCreateView(
@@ -39,15 +37,21 @@ class GradesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRefresh(
+            view,
+            R.id.grades_refresh,
+            requireContext()
+        )
         postResponseToIconnect(requireContext(), viewLifecycleOwner) { info ->
             val composeView = view.findViewById<ComposeView>(R.id.gradesComposeLayout)
+            val itemAmount = 10
             val menuItems = info.grades.map {
                 Triple(it.course, it.credits, it.grade)
             }
             composeView.setContent {
 
                 SimpleTable(
-                    menuItems = menuItems
+                    menuItems = menuItems.take(itemAmount)
                 )
             }
         }
@@ -84,7 +88,9 @@ fun SimpleTable(menuItems: List<Triple<String, Int, String>>) {
     // The LazyColumn will be our table
 
     LazyColumn(
-        Modifier.padding(16.dp),
+        Modifier
+            .padding(16.dp)
+            .fillMaxHeight(),
     ) {
         item {
             Row(

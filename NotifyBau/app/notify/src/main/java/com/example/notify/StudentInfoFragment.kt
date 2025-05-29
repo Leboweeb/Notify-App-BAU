@@ -22,6 +22,11 @@ class StudentInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRefresh(
+            view,
+            R.id.student_info_refresh,
+            requireContext()
+        )
         val userName = view.findViewById<TextView>(R.id.student_name)
         val userId = view.findViewById<TextView>(R.id.student_id)
         val programValue = view.findViewById<TextView>(R.id.program_value)

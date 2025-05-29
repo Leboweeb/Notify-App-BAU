@@ -7,228 +7,237 @@
     tools:context=".FinancialInfoFragment">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/financial_info_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/user_card"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="5dp"
-                app:layout_constraintBottom_toTopOf="@+id/lbp_card"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/user_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginHorizontal="24dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/lbp_card"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.222"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.035">
+                    app:layout_constraintTop_toTopOf="parent">
 
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/user_image"
-                        android:layout_width="108dp"
-                        android:layout_height="108dp"
-                        android:layout_marginBottom="16dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/baseline_person_24"
-                        app:layout_constraintBottom_toTopOf="@+id/user_name"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:riv_corner_radius="20dp" />
-
-                    <TextView
-                        android:id="@+id/user_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/segoeui"
-                        android:maxLines="5"
-                        android:text="[User Name]"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.493"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/lbp_card"
-                android:layout_width="184dp"
-                android:layout_height="100dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginBottom="44dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="5dp"
-                app:contentPadding="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/holds_card"
-                app:layout_constraintEnd_toStartOf="@+id/usd_card"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <TextView
-                    android:id="@+id/lbp_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/segoeui"
-                    android:text="LBP"
-                    android:textSize="16sp">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/lbp_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="30dp"
-                    android:fontFamily="@font/segoeui"
-                    android:text="[LBP Remaining]"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toEndOf="@id/def_user_photo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/usd_card"
-                android:layout_width="138dp"
-                android:layout_height="100dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginBottom="44dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="5dp"
-                app:contentPadding="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/holds_card"
-                app:layout_constraintEnd_toEndOf="parent">
-
-
-                <TextView
-                    android:id="@+id/usd_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="2dp"
-                    android:fontFamily="@font/segoeui"
-                    android:maxLines="3"
-                    android:text="USD"
-                    android:textSize="16sp">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/usd_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="30dp"
-                    android:fontFamily="@font/segoeui"
-                    android:maxLines="5"
-                    android:text="4296$"
-                    android:textSize="16sp"
-                    app:layout_constraintStart_toEndOf="@id/def_user_photo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/holds_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="32dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout2"
+                        android:id="@+id/constraintLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/design_default_color_error"
+                        android:padding="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintHorizontal_bias="0.222"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.035">
+
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/user_image"
+                            android:layout_width="108dp"
+                            android:layout_height="108dp"
+                            android:layout_marginBottom="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/baseline_person_24"
+                            app:layout_constraintBottom_toTopOf="@+id/user_name"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:riv_corner_radius="20dp" />
 
                         <TextView
-                            android:id="@+id/holds_label"
+                            android:id="@+id/user_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/segoeui"
-                            android:maxLines="3"
-                            android:text="Holds"
-                            android:textColor="@color/white"
+                            android:maxLines="5"
+                            android:text="[User Name]"
                             android:textSize="20sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.026"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0">
+                            app:layout_constraintHorizontal_bias="0.493"
+                            app:layout_constraintStart_toStartOf="parent" />
 
-                        </TextView>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <LinearLayout
-                        android:id="@+id/holds_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="158dp"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/lbp_card"
+                    android:layout_width="184dp"
+                    android:layout_height="100dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="44dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="5dp"
+                    app:contentPadding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/holds_card"
+                    app:layout_constraintEnd_toStartOf="@+id/usd_card"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:id="@+id/lbp_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/segoeui"
+                        android:text="LBP"
+                        android:textSize="16sp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/lbp_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/segoeui"
+                        android:text="[LBP Remaining]"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toEndOf="@id/def_user_photo"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-                        app:layout_constraintVertical_bias="0.0">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/usd_card"
+                    android:layout_width="138dp"
+                    android:layout_height="100dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="44dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="5dp"
+                    app:contentPadding="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/holds_card"
+                    app:layout_constraintEnd_toEndOf="parent">
 
 
-            </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/usd_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/segoeui"
+                        android:maxLines="3"
+                        android:text="USD"
+                        android:textSize="16sp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/usd_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/segoeui"
+                        android:maxLines="5"
+                        android:text="4296$"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toEndOf="@id/def_user_photo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/holds_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="32dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/design_default_color_error"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <TextView
+                                android:id="@+id/holds_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/segoeui"
+                                android:maxLines="3"
+                                android:text="Holds"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.026"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0">
+
+                            </TextView>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <LinearLayout
+                            android:id="@+id/holds_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="158dp"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+                            app:layout_constraintVertical_bias="0.0">
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </FrameLayout>

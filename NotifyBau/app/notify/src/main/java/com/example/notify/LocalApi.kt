@@ -115,8 +115,13 @@ class LocalApi(
         }.toMutableMap()
         textValues["cgpa"] = textValues["cgpa"]!!.split("/")[0]
         textValues["sgpa"] = textValues["sgpa"]!!.split("/")[0]
-        if (textValues.any {
-                it.value.isEmpty()
+        val essentialFields = textValues.keys.subtract(
+            listOf("remainingPaymentsUSD",
+                "remainingPaymentsLBP"
+                )
+        )
+        if (essentialFields.any {
+                textValues[it]!!.isEmpty()
             }) throw Exception("Couldn't extract x files info!")
         val imageUrl = extractBackgroundImageUrl(
             document.select("div[style*=\"ProfileImage\"]").attr("style")
@@ -162,8 +167,8 @@ class LocalApi(
             cgpa = textValues["cgpa"].orEmpty(),
             sgpa = textValues["sgpa"].orEmpty(),
             creditsCompleted = textValues["creditsCompleted"].orEmpty(),
-            remainingPaymentsLBP = numberParser.parse(textValues["remainingPaymentsLBP"] ?: "")?.toInt() ?: 0,
-            remainingPaymentsUSD = numberParser.parse(textValues["remainingPaymentsUSD"] ?: "")?.toInt() ?: 0,
+            remainingPaymentsLBP = strToNum(textValues["remainingPaymentsLBP"]),
+            remainingPaymentsUSD = strToNum(textValues["remainingPaymentsUSD"]),
             grades = gradesList.toList(),
             holds = holdsList,
         )
