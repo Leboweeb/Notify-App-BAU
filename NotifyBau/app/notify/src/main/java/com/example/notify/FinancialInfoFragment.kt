@@ -22,6 +22,11 @@ class FinancialInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRefresh(
+            view,
+            R.id.financial_info_refresh,
+            requireContext()
+        )
         postResponseToIconnect(
             requireContext(),
             viewLifecycleOwner

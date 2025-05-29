@@ -37,6 +37,11 @@ class GradesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRefresh(
+            view,
+            R.id.grades_refresh,
+            requireContext()
+        )
         postResponseToIconnect(requireContext(), viewLifecycleOwner) { info ->
             val composeView = view.findViewById<ComposeView>(R.id.gradesComposeLayout)
             val itemAmount = 10
