@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -25,25 +26,6 @@ import com.google.gson.Gson;
 public class HomeFragment extends Fragment {
     // Method to update user information
 
-    private void setupRefresh(View view) {
-        // refresh in home fragment works a bit differently.
-        // current frame is responsible for child fragment layout
-        // which means refreshing parent should effectively remount child which calls their respective onViewCreated functions.
-        SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipe_fragment);
-        swipeRefreshLayout.setDistanceToTriggerSync(240);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            FragmentActivity activity = requireActivity();
-            Fragment currentFragment = requireActivity().getSupportFragmentManager().findFragmentById(R.id.container);
-            assert currentFragment != null;
-            // before reconstructing view, clear cache key for the current fragment
-            UtilsKt.clearFragmentCache(currentFragment, requireContext());
-            // then refresh fragment frame layout
-            FragmentManager fm = activity.getSupportFragmentManager();
-            fm.beginTransaction().detach(currentFragment).commit();
-            fm.beginTransaction().attach(currentFragment).commit();
-            swipeRefreshLayout.setRefreshing(false);
-        });
-    }
 
     private void setupTabs(View view) {
         FragmentManager childFm = getChildFragmentManager();
@@ -60,6 +42,25 @@ public class HomeFragment extends Fragment {
         ).attach();
     }
 
+    private void setupRefresh(View view) {
+        // refresh in home fragment works a bit differently.
+        // current frame is responsible for child fragment layout
+        // which means refreshing parent should effectively remount child which calls their respective onViewCreated functions.
+        SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.refresh_home);
+        swipeRefreshLayout.setDistanceToTriggerSync(240);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            FragmentActivity activity = requireActivity();
+            Fragment currentFragment = requireActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+            assert currentFragment != null;
+            // before reconstructing view, clear cache key for the current fragment
+            UtilsKt.clearFragmentCache(currentFragment, requireContext());
+            // then refresh fragment frame layout
+            FragmentManager fm = activity.getSupportFragmentManager();
+            fm.beginTransaction().detach(currentFragment).commit();
+            fm.beginTransaction().attach(currentFragment).commit();
+            swipeRefreshLayout.setRefreshing(false);
+        });
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -76,7 +77,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupRefresh(view);
         setupTabs(view);
+        setupRefresh(view);
     }
 }

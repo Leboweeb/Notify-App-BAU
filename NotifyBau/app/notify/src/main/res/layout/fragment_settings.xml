@@ -9,14 +9,22 @@
     android:paddingTop="46dp"
     tools:context=".SettingsFragment">
 
-    <!-- APPEARANCE SECTION -->
+    <!-- App Language -->
+
+    <!-- NOTIFICATION SECTION -->
+
+    <!-- Push Notifications -->
+
     <TextView
         android:id="@+id/tv_appearance_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Appearance"
+        android:layout_marginTop="4dp"
+        android:text="Settings"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,125 +32,25 @@
         android:id="@+id/divider_appearance"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_appearance_header" />
 
-    <!-- Night Mode Switch -->
-    <TextView
-        android:id="@+id/tv_night_mode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Night Mode"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@id/night_mode_switch"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider_appearance" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/night_mode_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/tv_night_mode"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_night_mode" />
-
-    <!-- Font Size Preference -->
     <TextView
-        android:id="@+id/tv_font_size"
+        android:id="@+id/tv_refresh_interval"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Font Size"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@id/spinner_font_size"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_night_mode" />
-
-    <Spinner
-        android:id="@+id/spinner_font_size"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_font_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_font_size" />
-
-    <!-- LANGUAGE SECTION -->
-    <TextView
-        android:id="@+id/tv_language_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Language"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_font_size" />
-
-    <View
-        android:id="@+id/divider_language"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/tv_language_header" />
-
-    <!-- App Language -->
-    <TextView
-        android:id="@+id/tv_app_language"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="App Language"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@id/spinner_language"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider_language" />
-
-    <Spinner
-        android:id="@+id/spinner_language"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_app_language"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_app_language" />
-
-    <!-- NOTIFICATION SECTION -->
-    <TextView
-        android:id="@+id/tv_notification_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Notifications"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_app_language" />
-
-    <View
-        android:id="@+id/divider_notification"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/tv_notification_header" />
-
-    <!-- Push Notifications -->
-    <TextView
-        android:id="@+id/tv_push_notifications"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Push Notifications"
+        android:text="Refresh Interval ( Minutes )"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/switch_push_notifications"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider_notification" />
+        app:layout_constraintTop_toBottomOf="@+id/divider_appearance" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_push_notifications"
@@ -150,82 +58,123 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@id/tv_push_notifications"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_push_notifications" />
+        app:layout_constraintTop_toTopOf="@+id/tv_push_notifications" />
 
     <!-- Email Notifications -->
-    <TextView
-        android:id="@+id/tv_email_notifications"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Email Notifications"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toStartOf="@id/switch_email_notifications"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_push_notifications" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_email_notifications"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/tv_email_notifications"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_email_notifications" />
 
     <!-- PRIVACY & SECURITY SECTION -->
+
+
+    <TextView
+        android:id="@+id/tv_push_notifications"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="132dp"
+        android:text="Push Notifications"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/switch_push_notifications"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_appearance" />
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/slider_refresh_interval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:valueFrom="15"
+        android:valueTo="60"
+        android:stepSize="1"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_refresh_interval">
+
+    </com.google.android.material.slider.RangeSlider>
+
     <TextView
         android:id="@+id/tv_privacy_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Credentials"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="56dp"
+        android:text="@string/credentials_header"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_email_notifications" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_push_notifications" />
+
+    <!-- Biometric Login -->
+
+    <!-- Data Collection -->
+
+
+    <!-- Clear Cache Button -->
 
     <View
         android:id="@+id/divider_privacy"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/tv_privacy_header" />
+        app:layout_constraintTop_toBottomOf="@id/tv_privacy_header"
+        tools:layout_editor_absoluteX="32dp" />
 
-    <!-- Biometric Login -->
-    <EditText
-        android:id="@+id/tv_biometric_login"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
+        android:layout_width="match_parent"
+        android:maxWidth="488dp"
+        android:layout_marginTop="12dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:autofillHints="emailAddress"
-        android:hint="Email Address"
-        android:textSize="16sp"
+        android:padding="0dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider_privacy" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_privacy_header">
 
-    <!-- Data Collection -->
-    <EditText
-        android:id="@+id/tv_data_collection"
-        android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
+            android:hint="Email Address"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/divider_privacy" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:maxWidth="488dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textSize="16sp"
+        android:layout_marginTop="12dp"
+        app:endIconDrawable="@drawable/password_icon"
+        app:endIconMode="password_toggle"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_biometric_login" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
 
-
-    <!-- Clear Cache Button -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="password"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnLogout"
-        android:layout_width="319dp"
+        android:layout_width="match_parent"
+        android:maxWidth="320dp"
         android:layout_height="64dp"
-
+        android:layout_marginTop="24dp"
         android:background="#F4872A"
         android:backgroundTint="#F4872A"
         android:text="@string/logout"
@@ -233,9 +182,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_data_collection"
-        app:layout_constraintVertical_bias="0.405"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:layout_constraintVertical_bias="0.0"
         app:strokeColor="#F4872A" />
 
 

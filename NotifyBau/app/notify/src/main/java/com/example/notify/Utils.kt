@@ -9,11 +9,13 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Base64
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaType
@@ -24,6 +26,7 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.lang.reflect.Type
 import java.security.GeneralSecurityException
+import java.text.NumberFormat
 import java.util.Locale
 
 
@@ -174,6 +177,15 @@ fun getResourceString(name: String, context: Context): String {
     return context.getString(nameResourceID)
 }
 
+fun strToNum(string: String?) : Int {
+    val numberParser = NumberFormat.getInstance()
+    if (string.isNullOrEmpty()) {
+        return 0
+    }
+    val result = numberParser.parse(string) ?: throw Exception("Couldn't parse string $string !")
+    return result.toInt()
+}
+
 fun postResponseToIconnect(context: Context, lifecycleOwner: LifecycleOwner, callback : (info : XFilesInfo) -> Unit ) {
     val localApi = LocalApi(context)
     localApi.postResponseToListener(
@@ -186,6 +198,8 @@ fun postResponseToIconnect(context: Context, lifecycleOwner: LifecycleOwner, cal
         info -> callback(info)
     }
 }
+
+
 
 /**
  * Replacement for Kotlin's deprecated `capitalize()` function.

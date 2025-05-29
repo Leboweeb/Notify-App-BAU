@@ -15,6 +15,7 @@
     <string name="homepage_tab1">Student Info</string>
     <string name="homepage_tab3">Grades</string>
     <string name="homepage_tab2">Financial Info</string>
+    <string name="credentials_header">Change Credentials</string>
     <string-array name="my_header_title">
         <item />
         <item>Mon</item>

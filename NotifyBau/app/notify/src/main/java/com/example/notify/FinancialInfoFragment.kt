@@ -28,10 +28,12 @@ class FinancialInfoFragment : Fragment() {
         ) { info ->
 
             val userAvatar = view.findViewById<ImageView>(R.id.user_image)
+            val userName = view.findViewById<TextView>(R.id.user_name)
             val lbpRemaining = view.findViewById<TextView>(R.id.lbp_amount)
             val usdRemaining = view.findViewById<TextView>(R.id.usd_amount)
             val holdsLayout = view.findViewById<LinearLayout>(R.id.holds_layout)
             userAvatar.setImageBitmap(b64ToBitmap(info.studentImage))
+            userName.text = info.studentName
             lbpRemaining.text = String.format(Locale.ROOT,"%d",info.remainingPaymentsLBP)
             usdRemaining.text = String.format(Locale.ROOT,"%d",info.remainingPaymentsUSD)
             for(hold in info.holds) {
