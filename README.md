@@ -8,3 +8,8 @@ Its primary features are:
 - Automate registration for classes by reverse engineering official APIs and avoiding bot filters.
 
 While this app might not be very exciting, it solved a very real problem for students and was very well received because it addressed a very common but annoying issue.
+
+Furthermore, this app taught me:
+- How to go from designing and coding and application all the way till release.
+- How to integrate Jetpack Compose with traditional Views simultaneously.
+- How to use Kotlin with Java simultaneously.
