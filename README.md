@@ -13,3 +13,9 @@ Furthermore, this app taught me:
 - How to go from designing and coding and application all the way till release.
 - How to integrate Jetpack Compose with traditional Views simultaneously.
 - How to use Kotlin with Java simultaneously.
+
+##Tech Stack:
+- Java
+- Kotlin
+- Android Studio
+- Jetpack Compose
